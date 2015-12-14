@@ -15,6 +15,6 @@ func Restrict(w http.ResponseWriter, r *http.Request) {
 	if ps["user"] == "khiem" {
 		w.Write([]byte("OK"))
 	} else {
-		w.Write([]byte("NOT OK"))
+		w.Write([]byte("NOT OK, Out"))
 	}
 }
