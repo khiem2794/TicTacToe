@@ -4,7 +4,7 @@ save:
 	cd ./API_server/src/API_server && godep save -r
 
 install:
-	cd ./API_server/src/API_server && godep restore
+	cd ./API_server/src/API_server && go get ./...
 
 build:
 	cd ./API_server/src/API_server && go install
@@ -18,5 +18,4 @@ run-client-dev:
 run-client-prod:
 	npm run start
 
-run: build start
 
