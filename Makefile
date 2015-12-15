@@ -16,6 +16,6 @@ run-client-dev:
 	npm run dev
 
 run-client-prod:
-	npm run start
+	npm run build && npm run start
 
 

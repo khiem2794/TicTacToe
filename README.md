@@ -4,18 +4,24 @@
 
 ```bash
 npm install
+make install
+```
+## Running API Server
+
+```bash
+make build
+make run-server
 ```
 
 ## Running Dev Server
 
 ```bash
-npm run dev
+make run-client-dev
 ```
 
 ## Building and Running Production Server
 
 ```bash
-npm run build
-npm run start
+make run-client-prod
 ```
 
