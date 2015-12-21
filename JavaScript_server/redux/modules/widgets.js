@@ -37,6 +37,7 @@ export default function reducer(state = initialState, action = {}) {
         error: action.error
       };
     case EDIT_START:
+      console.log('ED START');
       return {
         ...state,
         editing: {
@@ -45,6 +46,7 @@ export default function reducer(state = initialState, action = {}) {
         }
       };
     case EDIT_STOP:
+      console.log('ED STOP');
       return {
         ...state,
         editing: {
@@ -53,8 +55,10 @@ export default function reducer(state = initialState, action = {}) {
         }
       };
     case SAVE:
+      console.log('SAVE');
       return state; // 'saving' flag handled by redux-form
     case SAVE_SUCCESS:
+      console.log('SAVE SUCCESS');
       const data = [...state.data];
       data[action.result.id - 1] = action.result;
       return {
@@ -70,6 +74,7 @@ export default function reducer(state = initialState, action = {}) {
         }
       };
     case SAVE_FAIL:
+      console.log('SAVE FAIL', action.error);
       return typeof action.error === 'string' ? {
         ...state,
         saveError: {
@@ -94,6 +99,7 @@ export function load() {
 }
 
 export function save(widget) {
+  widget.sprocketCount = parseInt(widget.sprocketCount, 10);
   return {
     types: [SAVE, SAVE_SUCCESS, SAVE_FAIL],
     id: widget.id,

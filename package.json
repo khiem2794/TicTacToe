@@ -12,6 +12,7 @@
   "scripts": {
     "start": "concurrent --kill-others \"npm run start-prod\"",
     "start-prod": "better-npm-run start-prod",
+    "start-dev-api": "better-npm-run start-dev-api",
     "build": "webpack --verbose --colors --display-error-details --config webpack/prod.config.js",
     "postinstall": "webpack --display-error-details --config webpack/prod.config.js",
     "lint": "eslint -c .eslintrc JavaScript_server",
@@ -21,6 +22,14 @@
     "test": "karma start"
   },
   "betterScripts": {
+    "start-dev-api": {
+      "command": "node ./bin/api.js",
+      "env": {
+        "NODE_PATH": "./api",
+        "NODE_ENV": "development",
+        "APIPORT": 3030
+      }
+    },
     "start-prod": {
       "command": "node ./bin/server.js",
       "env": {

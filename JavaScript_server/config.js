@@ -23,8 +23,8 @@ module.exports = Object.assign({
         'og:site_name': 'Caro-HKN',
         'og:image': 'https://react-redux.herokuapp.com/logo.jpg',
         'og:locale': 'en_US',
-        'og:title': 'React Redux Example',
-        'og:description': 'All the modern best practices in one example.'
+        'og:title': 'Online Caro game',
+        'og:description': 'Playing Caro game Online'
       }
     }
   }

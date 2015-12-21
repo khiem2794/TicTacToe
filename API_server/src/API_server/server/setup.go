@@ -61,8 +61,13 @@ func (s *setupStruct) setupRoutes() {
 	}
 
 	router := mux.NewRouter()
+
 	router.HandleFunc("/", normal(handlers.Home)).Methods("GET")
 	router.HandleFunc("/{user}", auth(handlers.Restrict)).Methods("GET")
-
+	router.HandleFunc("/ws", normal(handlers.WsTest))
+	router.HandleFunc("/widget/load/{param1}/{param2}", normal(handlers.LoadP))
+	router.HandleFunc("/widget/update", normal(handlers.EditP)).Methods("POST")
+	router.HandleFunc("/login", normal(handlers.Login)).Methods("POST")
+	router.HandleFunc("/logout", normal(handlers.Logout)).Methods("POST")
 	s.Handler = context.ClearHandler(router)
 }

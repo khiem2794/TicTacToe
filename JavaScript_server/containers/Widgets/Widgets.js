@@ -83,8 +83,8 @@ export default class Widgets extends Component {
           <tbody>
           {
             widgets.map((widget) => editing[widget.id] ?
-              <WidgetForm formKey={String(widget.id)} key={String(widget.id)} initialValues={widget}/> :
-              <tr key={widget.id}>
+              <WidgetForm formKey={String(widget.id)} key={String(widget.Id)} initialValues={widget}/> :
+              <tr key={widget.Id}>
                 <td className={styles.idCol}>{widget.id}</td>
                 <td className={styles.colorCol}>{widget.color}</td>
                 <td className={styles.sprocketsCol}>{widget.sprocketCount}</td>

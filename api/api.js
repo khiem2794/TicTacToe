@@ -67,7 +67,6 @@ if (config.apiPort) {
 
   io.on('connection', (socket) => {
     socket.emit('news', {msg: `'Hello World!' from server`});
-    console.log('hello world from server');
     socket.on('history', () => {
       for (let index = 0; index < bufferSize; index++) {
         const msgNo = (messageIndex + index) % bufferSize;
@@ -79,6 +78,7 @@ if (config.apiPort) {
     });
 
     socket.on('msg', (data) => {
+      console.log(data);
       data.id = messageIndex;
       messageBuffer[messageIndex % bufferSize] = data;
       messageIndex++;
