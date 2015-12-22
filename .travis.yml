@@ -2,6 +2,7 @@ language: go
 go:
   - 1.5.1
 before_script:
+  - go get github.com/tools/godep
   - nvm install 0.12.7
   - echo "\n\n\n\n\n" | npm install
 script:
