@@ -1,10 +1,10 @@
 export GOPATH=$(PWD)/API_server
 
 save:
-	cd ./API_server/src/API_server && godep save -r
+	cd ./API_server/src/API_server && godep save
 
 install:
-	cd ./API_server/src/API_server && go get ./...
+	cd ./API_server/src/API_server && godep restore
 
 build:
 	cd ./API_server/src/API_server && go install
