@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/ngockhiem27/caro-nhk.svg?branch=master)](https://travis-ci.org/ngockhiem27/caro-nhk)
 
 
 ## Installation
@@ -13,7 +14,7 @@ make build
 make run-server
 ```
 
-## Running Dev Server
+## Building and Running Dev Server
 
 ```bash
 make run-client-dev
