@@ -20,6 +20,8 @@ import {Provider} from 'react-redux';
 import qs from 'query-string';
 import getRoutes from './routes';
 import getStatusFromRoutes from './helpers/getStatusFromRoutes';
+import passport from 'passport';
+import passportConfig from './OAuth/passport';
 
 const pretty = new PrettyError();
 const app = new Express();
@@ -51,6 +53,20 @@ proxy.on('error', (error, req, res) => {
 
   json = {error: 'proxy_error', reason: error.message};
   res.end(JSON.stringify(json));
+});
+
+
+passportConfig(app);
+app.get('/auth/facebook',
+  passport.authenticate('facebook'),
+  function(req, res){
+    // The request will be redirected to Facebook for authentication, so this
+    // function will not be called.
+});
+app.get('/auth/facebook/callback', 
+  passport.authenticate('facebook', { failureRedirect: '/' }),
+  function(req, res) {
+    res.redirect('/old');
 });
 
 app.use((req, res) => {

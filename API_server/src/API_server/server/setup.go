@@ -3,10 +3,9 @@ package server
 import (
 	"net/http"
 
+	"API_server/handlers"
 	"API_server/middlewares"
 	"API_server/utils/logs"
-
-	"API_server/handlers"
 
 	"github.com/gorilla/context"
 	"github.com/gorilla/mux"
@@ -69,5 +68,7 @@ func (s *setupStruct) setupRoutes() {
 	router.HandleFunc("/widget/update", normal(handlers.EditP)).Methods("POST")
 	router.HandleFunc("/login", normal(handlers.Login)).Methods("POST")
 	router.HandleFunc("/logout", normal(handlers.Logout)).Methods("POST")
+	router.HandleFunc("/loadauth", normal(handlers.LoadAuth)).Methods("GET")
+
 	s.Handler = context.ClearHandler(router)
 }

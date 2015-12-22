@@ -12,6 +12,9 @@ import {
     Survey,
     NotFound,
     Todo,
+    CaroApp,
+    CaroLogin,
+    CaroHomepage
   } from 'containers';
 
 export default (store) => {
@@ -36,23 +39,27 @@ export default (store) => {
    * Please keep routes in alphabetical order
    */
   return (
-    <Route path="/" component={App}>
+    <Route path="/" component={CaroApp}>
       { /* Home (main) route */ }
-      <IndexRoute component={Home}/>
+      <IndexRoute component={CaroLogin}/>
+      <Route path="auth" component={CaroHomepage}/>
 
-      { /* Routes requiring login */ }
-      <Route onEnter={requireLogin}>
-        <Route path="chat" component={Chat}/>
-        <Route path="loginSuccess" component={LoginSuccess}/>
+      <Route path="old" component={App}>
+        <IndexRoute component={Home}/>
+        { /* Routes requiring login */ }
+        <Route onEnter={requireLogin}>
+          <Route path="chat" component={Chat}/>
+          <Route path="loginSuccess" component={LoginSuccess}/>
+        </Route>
+        { /* Routes */ }
+        <Route path="about" component={About}/>
+        <Route path="login" component={Login}/>
+        <Route path="survey" component={Survey}/>
+        <Route path="widgets" component={Widgets}/>
+        <Route path="todo" component={Todo}/>
+        { /* Catch all route */ }
       </Route>
 
-      { /* Routes */ }
-      <Route path="about" component={About}/>
-      <Route path="login" component={Login}/>
-      <Route path="survey" component={Survey}/>
-      <Route path="widgets" component={Widgets}/>
-      <Route path="todo" component={Todo}/>
-      { /* Catch all route */ }
       <Route path="*" component={NotFound} status={404} />
     </Route>
   );

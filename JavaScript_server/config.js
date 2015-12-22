@@ -27,5 +27,9 @@ module.exports = Object.assign({
         'og:description': 'Playing Caro game Online'
       }
     }
+  },
+  facebook: {
+    APP_ID: '1731524677077517',
+    APP_SECRET: 'e11fc72a9878626cf92ea55932bdb304'
   }
 }, environment);
