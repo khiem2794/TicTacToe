@@ -5,25 +5,24 @@ import { Navbar, NavBrand, Nav, NavItem, CollapsibleNav } from 'react-bootstrap'
 import DocumentMeta from 'react-document-meta';
 import { connect } from 'react-redux';
 // import { isLoaded as isInfoLoaded, load as loadInfo } from 'redux/modules/info';
-// import { isLoaded as isAuthLoaded, load as loadAuth, logout } from 'redux/modules/auth';
-import { logout } from 'redux/modules/auth';
+import { isLoaded as isAuthLoaded, load as loadAuth, logout } from 'redux/modules/auth';
 import { pushState } from 'redux-router';
-// import connectData from 'helpers/connectData';
+import connectData from 'helpers/connectData';
 import { InfoBar } from 'components';
 import config from '../../config';
 
-// function fetchData(getState, dispatch) {
-//   const promises = [];
-//   if (!isInfoLoaded(getState())) {
-//     promises.push(dispatch(loadInfo()));
-//   }
-//   if (!isAuthLoaded(getState())) {
-//     promises.push(dispatch(loadAuth()));
-//   }
-//   return Promise.all(promises);
-// }
+function fetchData(getState, dispatch) {
+  const promises = [];
+  // if (!isInfoLoaded(getState())) {
+  //   promises.push(dispatch(loadInfo()));
+  // }
+  if (!isAuthLoaded(getState())) {
+    promises.push(dispatch(loadAuth()));
+  }
+  return Promise.all(promises);
+}
 
-// @connectData(fetchData)
+@connectData(fetchData)
 @connect(
   state => ({user: state.auth.user}),
   {logout, pushState})
@@ -42,7 +41,7 @@ export default class App extends Component {
   componentWillReceiveProps(nextProps) {
     if (!this.props.user && nextProps.user) {
       // login
-      this.props.pushState(null, '/loginSuccess');
+      this.props.pushState(null, '/old/loginSuccess');
     } else if (this.props.user && !nextProps.user) {
       // logout
       this.props.pushState(null, '/');
@@ -70,28 +69,28 @@ export default class App extends Component {
 
           <CollapsibleNav eventKey={0}>
             <Nav navbar>
-              {user && <LinkContainer to="/chat">
+              {user && <LinkContainer to="/old/chat">
                 <NavItem eventKey={1}>Chat</NavItem>
               </LinkContainer>}
 
-              <LinkContainer to="/widgets">
+              <LinkContainer to="/old/widgets">
                 <NavItem eventKey={2}>Widgets</NavItem>
               </LinkContainer>
-              <LinkContainer to="/survey">
+              <LinkContainer to="/old/survey">
                 <NavItem eventKey={3}>Survey</NavItem>
               </LinkContainer>
-              <LinkContainer to="/about">
+              <LinkContainer to="/old/about">
                 <NavItem eventKey={4}>About Us</NavItem>
               </LinkContainer>
-              <LinkContainer to="/todo">
+              <LinkContainer to="/old/todo">
                 <NavItem eventKey={7}>To do</NavItem>
               </LinkContainer>
               {!user &&
-              <LinkContainer to="/login">
+              <LinkContainer to="/old/login">
                 <NavItem eventKey={5}>Login</NavItem>
               </LinkContainer>}
               {user &&
-              <LinkContainer to="/logout">
+              <LinkContainer to="/old/logout">
                 <NavItem eventKey={6} className="logout-link" onClick={this.handleLogout}>
                   Logout
                 </NavItem>

@@ -63,11 +63,32 @@ app.get('/auth/facebook',
     // The request will be redirected to Facebook for authentication, so this
     // function will not be called.
 });
-app.get('/auth/facebook/callback', 
-  passport.authenticate('facebook', { failureRedirect: '/' }),
-  function(req, res) {
-    res.redirect('/old');
-});
+
+// app.get('/ws/test', function(req, res){
+//   var client = new WebSocket('ws://localhost:3030/ws/test');
+//   client.onerror = function() {
+//     console.log('Connection Error');
+//   };
+//   client.onopen = function() {
+//     console.log('WebSocket Client Connected');
+//     function sendNumber() {
+//         if (client.readyState === client.OPEN) {
+//             var number = Math.round(Math.random() * 0xFFFFFF);
+//             client.send(number.toString());
+//             setTimeout(sendNumber, 1000);
+//         }
+//     }
+//     sendNumber();
+//   };
+//   client.onclose = function() {
+//     console.log('echo-protocol Client Closed');
+//   };
+//   client.onmessage = function(e) {
+//     if (typeof e.data === 'string') {
+//         console.log("Received: '" + e.data + "'");
+//     }
+//   };
+// });
 
 app.use((req, res) => {
   if (__DEVELOPMENT__) {
@@ -88,7 +109,6 @@ app.use((req, res) => {
     hydrateOnClient();
     return;
   }
-
   store.dispatch(match(req.originalUrl, (error, redirectLocation, routerState) => {
     if (redirectLocation) {
       res.redirect(redirectLocation.pathname + redirectLocation.search);

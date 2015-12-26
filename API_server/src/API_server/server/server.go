@@ -1,6 +1,9 @@
 package server
 
-import "net/http"
+import (
+	"API_server/OAuth"
+	"net/http"
+)
 
 type Config struct {
 	Server struct {
@@ -9,8 +12,8 @@ type Config struct {
 	} `json:"server"`
 }
 
-func Start(cfg Config) {
-	s := setup(cfg)
+func Start(cfg Config, authCfg *OAuth.Config) {
+	s := setup(cfg, authCfg)
 
 	listenAddr := cfg.Server.Addr + ":" + cfg.Server.Port
 

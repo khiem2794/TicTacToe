@@ -19,7 +19,7 @@ function formatUrl(path) {
  *
  * Remove it at your own risk.
  */
-class _ApiClient {
+class _ApiClientRaw {
   constructor(req) {
     methods.forEach((method) =>
       this[method] = (path, { params, data } = {}) => new Promise((resolve, reject) => {
@@ -37,18 +37,11 @@ class _ApiClient {
           request.send(data);
         }
 
-        // request.end((err, {body} = {} ) => err ? reject(body || err) : resolve(body));
-        request.end((err, {body} = {} ) => {
-          if (err || Object.keys(body).length === 0) {
-            reject(body || err);
-          } else {
-            resolve(body);
-          }
-        });
+        request.end((err, res = {} ) => err ? reject(res || err) : resolve(res));
       }));
   }
 }
 
-const ApiClient = _ApiClient;
+const ApiClientRaw = _ApiClientRaw;
 
-export default ApiClient;
+export default ApiClientRaw;

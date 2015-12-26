@@ -1,15 +1,4 @@
 {
-	"server": {
-		"API_PORT": "3030",
-		"API_ADDR": ""
-	},
-
-	"rethinkdb": {
-		"RETHINKDB_PORT": "28015",
-		"RETHINKDB_ADDR": "127.0.0.1",
-		"RETHINKDB_DBNAME": "caro_hkn"
-	},
-
 	"facebook": {
 		"APP_ID": "1731524677077517",
     	"APP_SECRET": "e11fc72a9878626cf92ea55932bdb304",

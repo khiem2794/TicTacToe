@@ -3,6 +3,7 @@ package server
 import (
 	"net/http"
 
+	"API_server/OAuth"
 	"API_server/handlers"
 	"API_server/middlewares"
 	"API_server/utils/logs"
@@ -15,12 +16,12 @@ var l = logs.New("API_server")
 
 type setupStruct struct {
 	Config
-
-	Handler http.Handler
+	AuthConfig *OAuth.Config
+	Handler    http.Handler
 }
 
-func setup(cfg Config) *setupStruct {
-	s := &setupStruct{Config: cfg}
+func setup(cfg Config, authCfg *OAuth.Config) *setupStruct {
+	s := &setupStruct{Config: cfg, AuthConfig: authCfg}
 	s.setupRoutes()
 
 	return s
@@ -62,13 +63,18 @@ func (s *setupStruct) setupRoutes() {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/", normal(handlers.Home)).Methods("GET")
-	router.HandleFunc("/{user}", auth(handlers.Restrict)).Methods("GET")
-	router.HandleFunc("/ws", normal(handlers.WsTest))
+	router.HandleFunc("/profile/{user}", auth(handlers.Restrict)).Methods("GET")
+	router.HandleFunc("/ws/test", normal(handlers.WsTest))
 	router.HandleFunc("/widget/load/{param1}/{param2}", normal(handlers.LoadP))
 	router.HandleFunc("/widget/update", normal(handlers.EditP)).Methods("POST")
 	router.HandleFunc("/login", normal(handlers.Login)).Methods("POST")
 	router.HandleFunc("/logout", normal(handlers.Logout)).Methods("POST")
-	router.HandleFunc("/loadauth", normal(handlers.LoadAuth)).Methods("GET")
+
+	authCtrl := handlers.NewAuthCtrl(s.AuthConfig)
+	{
+		router.HandleFunc("/login/facebook", normal(authCtrl.FacebookLogin)).Methods("POST")
+		router.HandleFunc("/loadAuth", normal(authCtrl.LoadAuth)).Methods("GET")
+	}
 
 	s.Handler = context.ClearHandler(router)
 }

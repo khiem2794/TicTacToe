@@ -8,6 +8,7 @@ export LoginSuccess from './LoginSuccess/LoginSuccess';
 export Survey from './Survey/Survey';
 export NotFound from './NotFound/NotFound';
 export Todo from './Todo/Todo';
-export CaroLogin from './CaroLogin/CaroLogin';
 export CaroHomepage from './CaroHomepage/CaroHomepage';
 export CaroApp from './CaroApp/CaroApp';
+export FacebookAuthCallBack from './Auth/FacebookAuthCallBack';
+export Landing from './Landing/Landing';

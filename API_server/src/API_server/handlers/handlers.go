@@ -22,7 +22,11 @@ type widget struct {
 }
 
 var (
-	upgrader = websocket.Upgrader{}
+	upgrader = websocket.Upgrader{
+		CheckOrigin: func(r *http.Request) bool {
+			return true
+		},
+	}
 
 	ws = logs.New("WebSocket")
 
@@ -61,7 +65,7 @@ func WsTest(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		ws.Println(message)
-		if err = conn.WriteMessage(mt, message); err != nil {
+		if err = conn.WriteMessage(mt, []byte("hello client")); err != nil {
 			return
 		}
 	}
@@ -81,7 +85,6 @@ func LoadP(w http.ResponseWriter, r *http.Request) {
 
 func EditP(w http.ResponseWriter, r *http.Request) {
 	p, _ := ioutil.ReadAll(r.Body)
-	fmt.Println("a+", string(p), "+a")
 	var wid widget
 	err := json.Unmarshal([]byte(string(p)), &wid)
 	if err != nil {

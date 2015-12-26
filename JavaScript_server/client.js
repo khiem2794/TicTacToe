@@ -8,7 +8,6 @@ import createHistory from 'history/lib/createBrowserHistory';
 import useScroll from 'scroll-behavior/lib/useStandardScroll';
 import createStore from './redux/create';
 import ApiClient from './helpers/ApiClient';
-import io from 'socket.io-client';
 import {Provider} from 'react-redux';
 import {reduxReactRouter, ReduxRouter} from 'redux-router';
 
@@ -23,20 +22,20 @@ const scrollablehistory = useScroll(createHistory);
 const dest = document.getElementById('content');
 const store = createStore(reduxReactRouter, makeRouteHooksSafe(getRoutes), scrollablehistory, client, window.__data);
 
-function initSocket() {
-  const socket = io('', {path: '/api/ws', transports: ['polling']});
-  socket.on('news', (data) => {
-    console.log(data);
-    socket.emit('my other event', { my: 'data from client' });
-  });
-  socket.on('msg', (data) => {
-    console.log(data);
-  });
-
-  return socket;
-}
-
-global.socket = initSocket();
+// function initSocket(socket) {
+//   socket.onerror = () => {
+//     console.log('Connection Error');
+//   };
+//   socket.onclose = () => {
+//     console.log('Socket Client Closed');
+//   };
+//   socket.onmessage = (evt) => {
+//     if (typeof evt.data === 'string') {
+//       console.log("Received: '" + evt.data + "'");
+//     }
+//   };
+// }
+// initSocket(socket);
 
 const component = (
   <ReduxRouter routes={getRoutes(store)} />

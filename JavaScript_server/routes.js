@@ -1,6 +1,7 @@
 import React from 'react';
 import {IndexRoute, Route} from 'react-router';
 import { isLoaded as isAuthLoaded, load as loadAuth } from 'redux/modules/auth';
+import { isLoaded as isFBAuthLoaded, load as loadFBAuth } from 'redux/modules/facebookauth';
 import {
     App,
     Chat,
@@ -13,8 +14,9 @@ import {
     NotFound,
     Todo,
     CaroApp,
-    CaroLogin,
-    CaroHomepage
+    CaroHomepage,
+    FacebookAuthCallBack,
+    Landing
   } from 'containers';
 
 export default (store) => {
@@ -34,16 +36,46 @@ export default (store) => {
       checkAuth();
     }
   };
-
+  const notLogin = (nextState, replaceState, cb) => {
+    function checkAuth() {
+      const { facebookauth: { user }} = store.getState();
+      if (user) {
+        replaceState(null, '/');
+      }
+      cb();
+    }
+    if (!isFBAuthLoaded(store.getState())) {
+      store.dispatch(loadFBAuth()).then(checkAuth);
+    } else {
+      checkAuth();
+    }
+  };
+  const toLanding = (nextState, replaceState, cb) => {
+    function checkAuth() {
+      const { facebookauth: { user }} = store.getState();
+      if (!user) {
+        replaceState(null, '/landing');
+      }
+      cb();
+    }
+    if (!isFBAuthLoaded(store.getState())) {
+      store.dispatch(loadFBAuth()).then(checkAuth);
+    } else {
+      checkAuth();
+    }
+  };
   /**
    * Please keep routes in alphabetical order
    */
   return (
     <Route path="/" component={CaroApp}>
-      { /* Home (main) route */ }
-      <IndexRoute component={CaroLogin}/>
-      <Route path="auth" component={CaroHomepage}/>
-
+      <Route onEnter={toLanding}>
+        <IndexRoute component={CaroHomepage}/>
+      </Route>
+      <Route onEnter={notLogin}>
+        <Route path="landing" component={Landing}/>
+        <Route path="auth/facebook/callback" component={FacebookAuthCallBack}/>
+      </Route>
       <Route path="old" component={App}>
         <IndexRoute component={Home}/>
         { /* Routes requiring login */ }

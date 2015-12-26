@@ -1,15 +1,16 @@
-const LOAD = 'caroAuth/LOAD';
-const LOAD_SUCCESS = 'caroAuth/LOAD_SUCCESS';
-const LOAD_FAIL = 'caroAuth/LOAD_FAIL';
-const LOGIN = 'caroAuth/LOGIN';
-const LOGIN_SUCCESS = 'caroAuth/LOGIN_SUCCESS';
-const LOGIN_FAIL = 'caroAuth/LOGIN_FAIL';
-const LOGOUT = 'caroAuth/LOGOUT';
-const LOGOUT_SUCCESS = 'caroAuth/LOGOUT_SUCCESS';
-const LOGOUT_FAIL = 'caroAuth/LOGOUT_FAIL';
+const LOAD = 'fbauth/LOAD';
+const LOAD_SUCCESS = 'fbauth/LOAD_SUCCESS';
+const LOAD_FAIL = 'fbauth/LOAD_FAIL';
+const LOGIN = 'fbauth/LOGIN';
+const LOGIN_SUCCESS = 'fbauth/LOGIN_SUCCESS';
+const LOGIN_FAIL = 'fbauth/LOGIN_FAIL';
+const LOGOUT = 'fbauth/LOGOUT';
+const LOGOUT_SUCCESS = 'fbauth/LOGOUT_SUCCESS';
+const LOGOUT_FAIL = 'fbauth/LOGOUT_FAIL';
 
 const initialState = {
-  loaded: false
+  loaded: false,
+  loggingIn: true,
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -24,7 +25,10 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loading: false,
         loaded: true,
-        user: action.result
+        user: {
+          name: action.result.name,
+          fbid: action.result.id
+        }
       };
     case LOAD_FAIL:
       return {
@@ -36,13 +40,16 @@ export default function reducer(state = initialState, action = {}) {
     case LOGIN:
       return {
         ...state,
-        loggingIn: true
+        loggingIn: false
       };
     case LOGIN_SUCCESS:
       return {
         ...state,
         loggingIn: false,
-        user: action.result
+        user: {
+          name: action.result.name,
+          fbid: action.result.id
+        }
       };
     case LOGIN_FAIL:
       return {
@@ -74,23 +81,22 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 export function isLoaded(globalState) {
-  return globalState.auth && globalState.auth.loaded;
+  return globalState.facebookauth && globalState.facebookauth.loaded;
 }
 
 export function load() {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get('/loadauth')
+    promise: (client) => client.get('/loadAuth')
   };
 }
 
-export function login(name) {
-  console.log({name: name});
+export function login(code) {
   return {
     types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
-    promise: (client) => client.post('/login', {
+    promise: (client) => client.post('/login/facebook', {
       data: {
-        name: name
+        code: code
       }
     })
   };

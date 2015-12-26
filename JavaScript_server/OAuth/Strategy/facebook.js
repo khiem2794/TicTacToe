@@ -11,9 +11,9 @@ export default function() {
 	},
 	function(req, accessToken, refreshToken, profile, done){
 		const user = {};
-		user.profile = profile;
+		user.id = profile.id;
+		user.name = profile.displayName;
 		user.accessToken = accessToken;
-		console.log(user);
 		done(null, user);
 	}));
 }
