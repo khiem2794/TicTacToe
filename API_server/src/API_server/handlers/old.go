@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"API_server/utils/logs"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -11,7 +10,6 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/gorilla/securecookie"
 	"github.com/gorilla/sessions"
-	"github.com/gorilla/websocket"
 )
 
 type widget struct {
@@ -22,14 +20,6 @@ type widget struct {
 }
 
 var (
-	upgrader = websocket.Upgrader{
-		CheckOrigin: func(r *http.Request) bool {
-			return true
-		},
-	}
-
-	ws = logs.New("WebSocket")
-
 	a = widget{Id: 1, Color: "Red", SprocketCount: 7, Owner: "John"}
 	b = widget{Id: 2, Color: "Green", SprocketCount: 17, Owner: "Khiem"}
 	c = widget{Id: 3, Color: "Red", SprocketCount: 27, Owner: "Mary"}
@@ -49,25 +39,6 @@ func Restrict(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("OK"))
 	} else {
 		w.Write([]byte("NOT OK, Out"))
-	}
-}
-
-func WsTest(w http.ResponseWriter, r *http.Request) {
-	conn, err := upgrader.Upgrade(w, r, nil)
-	if err != nil {
-		ws.Println(err)
-		return
-	}
-	defer conn.Close()
-	for {
-		mt, message, err := conn.ReadMessage()
-		if err != nil {
-			return
-		}
-		ws.Println(message)
-		if err = conn.WriteMessage(mt, []byte("hello client")); err != nil {
-			return
-		}
 	}
 }
 

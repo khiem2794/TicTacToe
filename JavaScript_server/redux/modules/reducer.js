@@ -9,6 +9,7 @@ import info from './info';
 import widgets from './widgets';
 import todo from './todo';
 import facebookauth from './facebookauth';
+import caro from './caro';
 
 export default combineReducers({
   router: routerStateReducer,
@@ -22,5 +23,6 @@ export default combineReducers({
   info,
   widgets,
   todo,
-  facebookauth
+  facebookauth,
+  caro
 });

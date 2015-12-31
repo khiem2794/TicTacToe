@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import {connect} from 'react-redux';
-import {PlayButton} from 'components';
 
 @connect(
   state => ({
@@ -14,9 +13,7 @@ export default class CaroHomepage extends Component {
     return (
   	<div>
   		<div>Welcome {this.props.user.name}</div>
-      <PlayButton />
   	</div>
-
   	);
   }
 }

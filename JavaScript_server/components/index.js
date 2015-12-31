@@ -13,3 +13,4 @@ export SurveyForm from './SurveyForm/SurveyForm';
 export WidgetForm from './WidgetForm/WidgetForm';
 export FacebookLogin from './FacebookLogin/FacebookLogin';
 export PlayButton from './PlayButton/PlayButton';
+export CaroBoard from './CaroBoard/CaroBoard';

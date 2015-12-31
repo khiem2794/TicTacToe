@@ -1,28 +1,60 @@
-const 
-const START = 'caro/START';
-const END = 'caro/END';
-const CONCEDE = 'caro/CONCEDE';
+const ACTION_CONNECT = 'caro/CONNECT';
+const ACTION_WAIT = 'caro/WAIT';
+const ACTION_INIT = 'caro/INIT';
+const ACTION_CHANGE = 'caro/CHANGE';
+const ACTION_END = 'caro/END';
 
-
-initialState = {
-  start: false
+const initialState = {
+  playing: false,
+  waiting: false,
+  socket: null
 }
 
 export default function caro(state = initialState, action){
   switch (action.type) {
-      case START:
+      case ACTION_WAIT:
         return {
           ...state,
-          start: true,
-          busy: true
+          playing: true,
+          waiting: true
+        }
+      case ACTION_CONNECT:
+        return {
+          ...state,
+          socket: action.ws
         }
       default:
         return state;
   }
 }
 
-export function start() {
+export function initSocket(ws) {
+	return {
+	  type: ACTION_CONNECT,
+	  ws
+	}
+}
+
+export function wait() {
+  console.log("waiting");
   return {
-  	type: START
+  	type: ACTION_WAIT
+  }
+}
+export function init() {
+  return {
+  	type: ACTION_INIT
+  }
+}
+
+export function change() {
+  return {
+    type: ACTION_CHANGE
+  }
+}
+
+export function end() {
+  return {
+  	type: ACTION_END
   }
 }

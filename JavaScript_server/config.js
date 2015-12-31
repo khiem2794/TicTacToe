@@ -13,7 +13,7 @@ module.exports = Object.assign({
   host: process.env.HOST || 'localhost',
   port: process.env.PORT,
   apiHost: process.env.APIHOST || 'localhost',
-  apiPort: process.env.APIPORT,
+  apiPort: process.env.APIPORT || 3030,
   app: {
     title: 'Online Caro game',
     description: 'Online Caro game',

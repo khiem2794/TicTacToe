@@ -16,7 +16,12 @@ import {
     CaroApp,
     CaroHomepage,
     FacebookAuthCallBack,
-    Landing
+    Landing,
+    Ranking,
+    Overview,
+    Profile,
+    Spectate,
+    Caro
   } from 'containers';
 
 export default (store) => {
@@ -71,6 +76,11 @@ export default (store) => {
     <Route path="/" component={CaroApp}>
       <Route onEnter={toLanding}>
         <IndexRoute component={CaroHomepage}/>
+        <Route path='/overview' component={Overview} />
+        <Route path='/profile' component={Profile} />
+        <Route path='/ranking' component={Ranking} />
+        <Route path='/spectate' component={Spectate} />
+        <Route path='/caro' component={Caro} />
       </Route>
       <Route onEnter={notLogin}>
         <Route path="landing" component={Landing}/>

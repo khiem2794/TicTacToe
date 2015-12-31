@@ -30,9 +30,9 @@ func setup(cfg Config, authCfg *OAuth.Config) *setupStruct {
 func commonMiddlewares() func(http.Handler) http.Handler {
 	logger := middlewares.NewLogger()
 	recovery := middlewares.NewRecovery()
-
+	ctx := middlewares.NewCtx()
 	return func(h http.Handler) http.Handler {
-		return recovery(logger(h))
+		return recovery(ctx(logger(h)))
 	}
 }
 
@@ -64,7 +64,6 @@ func (s *setupStruct) setupRoutes() {
 
 	router.HandleFunc("/", normal(handlers.Home)).Methods("GET")
 	router.HandleFunc("/profile/{user}", auth(handlers.Restrict)).Methods("GET")
-	router.HandleFunc("/ws/test", normal(handlers.WsTest))
 	router.HandleFunc("/widget/load/{param1}/{param2}", normal(handlers.LoadP))
 	router.HandleFunc("/widget/update", normal(handlers.EditP)).Methods("POST")
 	router.HandleFunc("/login", normal(handlers.Login)).Methods("POST")
@@ -74,6 +73,11 @@ func (s *setupStruct) setupRoutes() {
 	{
 		router.HandleFunc("/login/facebook", normal(authCtrl.FacebookLogin)).Methods("POST")
 		router.HandleFunc("/loadAuth", normal(authCtrl.LoadAuth)).Methods("GET")
+	}
+
+	gameCtrl := handlers.NewGameCtrl()
+	{
+		router.Handle("/ws/caro", normal(gameCtrl.CaroHandler))
 	}
 
 	s.Handler = context.ClearHandler(router)
