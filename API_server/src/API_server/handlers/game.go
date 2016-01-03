@@ -26,6 +26,7 @@ type GameCtrl struct {
 
 func NewGameCtrl() *GameCtrl {
 	p := Caro.NewPool()
+	go p.FieldManager()
 	return &GameCtrl{p}
 }
 

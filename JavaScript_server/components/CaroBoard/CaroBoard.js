@@ -1,5 +1,6 @@
-import React, {Component} from 'react';
-
+import React, {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
+import range from 'helpers/range';
 const style = `
 table {
   border-collapse: collapse;
@@ -17,52 +18,74 @@ td.lastmove {
   color: #a00;
 }
 `
-
-const numbers = [0,1,2,3,4,5,6,7,8,9];
-
+@connect(
+  state => ({
+    socket: state.caro.socket,
+    board: state.caro.board,
+    symbol: state.caro.symbol,
+    opponent: state.caro.opponent,
+    yourturn: state.caro.yourturn,
+    user: state.facebookauth.user
+  }))
 export default class CaroBoard extends Component {
-  constructor() {
-    super();
+  static propTypes = {
+    socket: PropTypes.object.isRequired,
+    moveMSG: PropTypes.func.isRequired,
+    opponent: PropTypes.object.isRequired,
+    symbol: PropTypes.string.isRequired,
+    yourturn: PropTypes.bool.isRequired,
+    board: PropTypes.object.isRequired
+  }
+  constructor(props) {
+    super(props);
     this.state = {
+      numbers: range(0, this.props.board.size-1),
       cells: this.getInitBoard(),
-      currentPlayer: 'X',
-      lastMove: {x: null, y: null},
-      moves:[]
+      lastMove: {x: null, y: null}
     }
   }
-  getInitBoard() {
+  getInitBoard = () => {
+    const numbers = range(0, this.props.board.size - 1);
     return numbers.map(() => 
       numbers.map(() => ({ char: '' })));
   }
   playAtCell(x, y) {
-    let { cells, currentPlayer,moves} = this.state;
-    if (cells[x][y].char) return;
-    cells[x][y].char = currentPlayer;
-    moves.push({x,y});
-    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-    this.setState({ cells, currentPlayer, lastMove: {x, y}, moves });
-  }
-  resetBoard() {
-    this.setState({
-      cells: this.getInitBoard(),
-      currentPlayer: 'X'
-    });
+    if (this.props.yourturn && !this.state.cells[x][y].char){
+      let { cells, moves } = this.state;
+      this.props.socket.send(JSON.stringify(this.props.moveMSG(x, y)));
+      this.setState({ cells, lastMove: {x, y} });
+    }
   }
   render() {
   	const { cells } = this.state;
     const lX = this.state.lastMove.x;
     const lY = this.state.lastMove.y;
+    console.log(this.props.board);
+    if (this.props.board.x) {
+      for (let i = 0; i < this.props.board.x.length; i++) {
+        const x = this.props.board.x[i].x;
+        const y = this.props.board.x[i].y;
+        cells[x][y].char = 'X'
+      }
+    }
+    if (this.props.board.o) {
+      for (let i = 0; i < this.props.board.o.length; i++) {
+        const x = this.props.board.o[i].x;
+        const y = this.props.board.o[i].y;
+        cells[x][y].char = 'O'
+      }
+    }
     return (
       <div>
         <style dangerouslySetInnerHTML={{__html: style}}/>
-        <div>Current player: {this.state.currentPlayer}</div>
+        <div>{this.props.yourturn ? "Your turn" : this.props.opponent.name + "'s turn"}<br /> Turn: {this.props.board.turn}</div>
         <table>
           <tbody>
             {
-              numbers.map((row, y) => (
+              this.state.numbers.map((row, y) => (
                 <tr>
                 {
-                  numbers.map((col, x) => (
+                  this.state.numbers.map((col, x) => (
                     <td
                       className={lX===x && lY===y? 'lastmove': ''}
                       onClick={() => this.playAtCell(x, y)}>

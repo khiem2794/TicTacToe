@@ -10,7 +10,9 @@ import ResponseClient from 'helpers/ResponseClient';
   state => ({
     playing: state.caro.playing,
     waiting: state.caro.waiting,
-    fbid: state.facebookauth.user.fbid,
+    user: state.facebookauth.user,
+    opponent: state.caro.opponent,
+    symbol: state.caro.symbol,
     socket: state.caro.socket,
   })
   ,{...caroActions})
@@ -22,19 +24,24 @@ export default class Caro extends Component {
   static propTypes = {
   	playing: PropTypes.bool.isRequired,
   	waiting: PropTypes.bool.isRequired,
-  	fbid: PropTypes.string.isRequired,
+  	user: PropTypes.object.isRequired,
+  	opponent: PropTypes.object,
+  	symbol: PropTypes.string,
   	socket: PropTypes.object,
   	initSocket: PropTypes.func.isRequired,
   }
   componentDidMount() {
   	if (!this.props.socket){
   	  const ws = new window.WebSocket('ws://' + config.apiHost + ':' + config.apiPort + '/ws/caro');
-  	  ws.onmessage = (res) => ResponseClient(JSON.parse(res.data), this.props);
+  	  ws.onmessage = (res) => {
+  	  	// console.log(JSON.parse(res.data));
+  	  	ResponseClient(JSON.parse(res.data), this.props);
+  	  }
   	  this.props.initSocket(ws);
   	}
   }
   startPlaying = () => {
-  	this.props.socket.send(JSON.stringify(MessageClient.startMSG(this.props.fbid)));
+  	this.props.socket.send(JSON.stringify(MessageClient.startMSG()));
   }
   render() {
   	const { waiting, playing } = this.props;
@@ -42,7 +49,14 @@ export default class Caro extends Component {
   		<div>
   			{waiting && <PlayButton startPlaying={this.startPlaying} waiting={true}/> }
   			{!playing && !waiting && <PlayButton startPlaying={this.startPlaying} waiting={false}/> }
-  			{playing && !waiting && <CaroBoard /> }
+  			{playing && !waiting && 
+  				<div>
+  					<p>Play against {this.props.opponent.name}</p>
+  					<p>You: {this.props.symbol}</p>
+  					<p>{this.props.opponent.name}: {this.props.opponent.symbol}</p>
+  					<CaroBoard moveMSG={MessageClient.moveMSG}/> 
+  				</div>
+  			}
   		</div>
   	)
   }

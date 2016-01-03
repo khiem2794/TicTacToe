@@ -1,6 +1,6 @@
 const ACTION_CONNECT = 'caro/CONNECT';
 const ACTION_WAIT = 'caro/WAIT';
-const ACTION_INIT = 'caro/INIT';
+const ACTION_READY = 'caro/READY';
 const ACTION_CHANGE = 'caro/CHANGE';
 const ACTION_END = 'caro/END';
 
@@ -23,6 +23,32 @@ export default function caro(state = initialState, action){
           ...state,
           socket: action.ws
         }
+      case ACTION_READY:
+        return {
+          ...state,
+          playing: true,
+          waiting: false,
+          opponent: action.opponent,
+          yourturn: action.yourturn,
+          symbol: action.symbol,
+          board: {
+          	size: action.board.size,
+          	x: [],
+          	o: [],
+          	turn: action.board.turn
+          }
+        }
+      case ACTION_CHANGE:
+        return {
+          ...state,
+          yourturn: action.yourturn,
+          board:{
+          	...state.board,
+          	turn: action.board.turn,
+          	x: action.board.x,
+          	o: action.board.o
+          }
+        }
       default:
         return state;
   }
@@ -41,15 +67,21 @@ export function wait() {
   	type: ACTION_WAIT
   }
 }
-export function init() {
+export function ready(res) {
   return {
-  	type: ACTION_INIT
+  	type: ACTION_READY,
+  	opponent: res.opponent,
+  	yourturn: res.yourturn,
+  	symbol: res.symbol,
+  	board: res.board
   }
 }
 
-export function change() {
+export function change(res) {
   return {
-    type: ACTION_CHANGE
+    type: ACTION_CHANGE,
+    yourturn: res.yourturn,
+    board: res.board
   }
 }
 
