@@ -17,6 +17,9 @@ func (this *Room) Ready() {
 	this.B.AddResponse(CreateReadyResopnse(this.A, this.Board, false, this.B.Symbol))
 }
 
+func (this *Room) Result() *Player {
+
+}
 func (this *Room) BroadcastMove(player *Player) {
 	isATurn := false
 	if player != this.A {
