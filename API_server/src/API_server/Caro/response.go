@@ -42,7 +42,7 @@ func CreateBoardResponse(yourTurn bool, b *Board) Response {
 	}
 }
 
-func CreateErrorResponse() {
+func CreateErrorResponse() Response {
 	return Response{
 		Res: RES_ERROR,
 	}
