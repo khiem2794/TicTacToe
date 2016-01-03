@@ -4,6 +4,7 @@ const (
 	RES_WAIT  = "wait"
 	RES_READY = "ready"
 	RES_BOARD = "board"
+	RES_ERROR = "error"
 
 	SYMBOL_X = "X"
 	SYMBOL_O = "O"
@@ -38,5 +39,11 @@ func CreateBoardResponse(yourTurn bool, b *Board) Response {
 		Res:      RES_BOARD,
 		YourTurn: yourTurn,
 		Board:    b,
+	}
+}
+
+func CreateErrorResponse() {
+	return Response{
+		Res: RES_ERROR,
 	}
 }

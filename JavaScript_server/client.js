@@ -22,21 +22,6 @@ const scrollablehistory = useScroll(createHistory);
 const dest = document.getElementById('content');
 const store = createStore(reduxReactRouter, makeRouteHooksSafe(getRoutes), scrollablehistory, client, window.__data);
 
-// function initSocket(socket) {
-//   socket.onerror = () => {
-//     console.log('Connection Error');
-//   };
-//   socket.onclose = () => {
-//     console.log('Socket Client Closed');
-//   };
-//   socket.onmessage = (evt) => {
-//     if (typeof evt.data === 'string') {
-//       console.log("Received: '" + evt.data + "'");
-//     }
-//   };
-// }
-// initSocket(socket);
-
 const component = (
   <ReduxRouter routes={getRoutes(store)} />
 );

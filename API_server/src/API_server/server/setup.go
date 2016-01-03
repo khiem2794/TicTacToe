@@ -46,7 +46,6 @@ func authMiddlewares() func(http.Handler) http.Handler {
 
 func (s *setupStruct) setupRoutes() {
 	commonMids := commonMiddlewares()
-	authMids := authMiddlewares()
 
 	normal := func(h http.HandlerFunc) http.HandlerFunc {
 		return func(w http.ResponseWriter, r *http.Request) {
@@ -54,20 +53,7 @@ func (s *setupStruct) setupRoutes() {
 		}
 	}
 
-	auth := func(h http.HandlerFunc) http.HandlerFunc {
-		return func(w http.ResponseWriter, r *http.Request) {
-			commonMids(authMids(h)).ServeHTTP(w, r)
-		}
-	}
-
 	router := mux.NewRouter()
-
-	router.HandleFunc("/", normal(handlers.Home)).Methods("GET")
-	router.HandleFunc("/profile/{user}", auth(handlers.Restrict)).Methods("GET")
-	router.HandleFunc("/widget/load/{param1}/{param2}", normal(handlers.LoadP))
-	router.HandleFunc("/widget/update", normal(handlers.EditP)).Methods("POST")
-	router.HandleFunc("/login", normal(handlers.Login)).Methods("POST")
-	router.HandleFunc("/logout", normal(handlers.Logout)).Methods("POST")
 
 	authCtrl := handlers.NewAuthCtrl(s.AuthConfig)
 	{
