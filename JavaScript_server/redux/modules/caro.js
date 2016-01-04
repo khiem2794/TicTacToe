@@ -3,11 +3,13 @@ const ACTION_WAIT = 'caro/WAIT';
 const ACTION_READY = 'caro/READY';
 const ACTION_CHANGE = 'caro/CHANGE';
 const ACTION_END = 'caro/END';
+const ACTION_RESTART = 'caro/RESTART';
 
 const initialState = {
   playing: false,
   waiting: false,
-  socket: null
+  socket: null,
+  result: false
 }
 
 export default function caro(state = initialState, action){
@@ -42,12 +44,33 @@ export default function caro(state = initialState, action){
         return {
           ...state,
           yourturn: action.yourturn,
-          board:{
+          board: {
           	...state.board,
           	turn: action.board.turn,
           	x: action.board.x,
           	o: action.board.o
           }
+        }
+      case ACTION_END:
+        console.log(action);
+        return {
+          ...state,
+          yourturn: false,
+          board: {
+            ...state.board,
+            turn: action.board.turn,
+            x: action.board.x,
+            o: action.board.o
+          },
+          result: true,
+          win: action.result
+        }
+      case ACTION_RESTART:
+        return {
+          playing: false,
+          waiting: false,
+          result: false,
+          socket: state.socket
         }
       default:
         return state;
@@ -85,8 +108,16 @@ export function change(res) {
   }
 }
 
-export function end() {
+export function end(res) {
   return {
-  	type: ACTION_END
+  	type: ACTION_END,
+    result: res.result === 'win',
+    board: res.board
+  }
+}
+
+export function restart() {
+  return {
+    type: ACTION_RESTART
   }
 }

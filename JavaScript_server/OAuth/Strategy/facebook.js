@@ -6,7 +6,7 @@ export default function() {
 	passport.use( new Strategy({
 		clientID: config.facebook.APP_ID,
 		clientSecret: config.facebook.APP_SECRET,
-		callbackURL: 'http://localhost:3000/auth/facebook/callback',
+		callbackURL: '/auth/facebook/callback',
 		passReqToCallback: true
 	},
 	function(req, accessToken, refreshToken, profile, done){

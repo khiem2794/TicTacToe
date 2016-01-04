@@ -17,13 +17,15 @@ func (this *Room) Ready() {
 	this.B.AddResponse(CreateReadyResopnse(this.A, this.Board, false, this.B.Symbol))
 }
 
-func (this *Room) Result() *Player {
-
-}
 func (this *Room) BroadcastMove(player *Player) {
 	isATurn := false
 	if player != this.A {
 		isATurn = true
+	}
+	if end := this.Board.CheckWin(player.Symbol); end {
+		this.A.AddResponse(CreateEndResponse(!isATurn, this.Board))
+		this.B.AddResponse(CreateEndResponse(isATurn, this.Board))
+		return
 	}
 	this.A.AddResponse(CreateBoardResponse(isATurn, this.Board))
 	this.B.AddResponse(CreateBoardResponse(!isATurn, this.Board))

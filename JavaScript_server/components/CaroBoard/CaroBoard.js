@@ -20,19 +20,12 @@ td.lastmove {
 `
 @connect(
   state => ({
-    socket: state.caro.socket,
-    board: state.caro.board,
-    symbol: state.caro.symbol,
-    opponent: state.caro.opponent,
-    yourturn: state.caro.yourturn,
-    user: state.facebookauth.user
+    socket: state.caro.socket
   }))
 export default class CaroBoard extends Component {
   static propTypes = {
     socket: PropTypes.object.isRequired,
     moveMSG: PropTypes.func.isRequired,
-    opponent: PropTypes.object.isRequired,
-    symbol: PropTypes.string.isRequired,
     yourturn: PropTypes.bool.isRequired,
     board: PropTypes.object.isRequired
   }
@@ -78,7 +71,6 @@ export default class CaroBoard extends Component {
     return (
       <div>
         <style dangerouslySetInnerHTML={{__html: style}}/>
-        <div>{this.props.yourturn ? "Your turn" : this.props.opponent.name + "'s turn"}<br /> Turn: {this.props.board.turn}</div>
         <table>
           <tbody>
             {
