@@ -39,10 +39,6 @@
 		{
 			"ImportPath": "github.com/hailocab/go-hostpool",
 			"Rev": "50839ee41f32bfca8d03a183031aa634b2dc1c64"
-		},
-		{
-			"ImportPath": "gopkg.in/fatih/pool.v2",
-			"Rev": "cba550ebf9bce999a02e963296d4bc7a486cb715"
 		}
 	]
 }
