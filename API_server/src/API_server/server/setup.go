@@ -4,10 +4,14 @@ import (
 	"net/http"
 
 	"API_server/OAuth"
+	r "API_server/api/rethink"
+	"API_server/dbscript"
 	"API_server/handlers"
 	"API_server/middlewares"
+	"API_server/store"
 	"API_server/utils/logs"
 
+	"github.com/dancannon/gorethink"
 	"github.com/gorilla/context"
 	"github.com/gorilla/mux"
 )
@@ -18,10 +22,12 @@ type setupStruct struct {
 	Config
 	AuthConfig *OAuth.Config
 	Handler    http.Handler
+	DB         *r.Instance
 }
 
 func setup(cfg Config, authCfg *OAuth.Config) *setupStruct {
 	s := &setupStruct{Config: cfg, AuthConfig: authCfg}
+	s.setupRethink()
 	s.setupRoutes()
 
 	return s
@@ -44,6 +50,21 @@ func authMiddlewares() func(http.Handler) http.Handler {
 	}
 }
 
+func (s *setupStruct) setupRethink() {
+	cfg := s.Config
+	re, err := r.NewInstance(gorethink.ConnectOpts{
+		Address:  cfg.Rethink.Addr + ":" + cfg.Rethink.Port,
+		Database: cfg.Rethink.DBName,
+	})
+	if err != nil {
+		l.Fatalln("Couldn't connect to Rethink server")
+	}
+	s.DB = re
+	script := dbscript.NewRethinkScript(s.DB, cfg.Rethink.DBName)
+	if err := script.Setup(); err != nil {
+		l.Fatalln("Error generating data", err)
+	}
+}
 func (s *setupStruct) setupRoutes() {
 	commonMids := commonMiddlewares()
 
@@ -54,14 +75,14 @@ func (s *setupStruct) setupRoutes() {
 	}
 
 	router := mux.NewRouter()
-
-	authCtrl := handlers.NewAuthCtrl(s.AuthConfig)
+	store := store.NewStore(s.DB)
+	authCtrl := handlers.NewAuthCtrl(s.AuthConfig, store)
 	{
 		router.HandleFunc("/login/facebook", normal(authCtrl.FacebookLogin)).Methods("POST")
 		router.HandleFunc("/loadAuth", normal(authCtrl.LoadAuth)).Methods("GET")
 	}
 
-	gameCtrl := handlers.NewGameCtrl()
+	gameCtrl := handlers.NewGameCtrl(store)
 	{
 		router.Handle("/ws/caro", normal(gameCtrl.CaroHandler))
 	}

@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 
 export default class Spectate extends Component {
   render() {
-  	return (
+    return (
   		<div>
   			SPECTATE PAGE
   		</div>
-  	)
+  	);
   }
 }

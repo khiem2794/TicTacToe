@@ -1,23 +1,25 @@
 package Caro
 
+type ResponseType string
+
 const (
-	RES_WAIT  = "wait"
-	RES_READY = "ready"
-	RES_BOARD = "board"
-	RES_ERROR = "error"
-	RES_END   = "end"
+	RES_WAIT  = ResponseType("wait")
+	RES_READY = ResponseType("ready")
+	RES_BOARD = ResponseType("board")
+	RES_ERROR = ResponseType("error")
+	RES_END   = ResponseType("end")
 
 	SYMBOL_X = "X"
 	SYMBOL_O = "O"
 )
 
 type Response struct {
-	Res      string  `json:"response"`
-	Opponent *Player `json:"opponent,omitempty"`
-	YourTurn bool    `json:"yourturn"`
-	Symbol   string  `json:"symbol,omitempty"`
-	Board    *Board  `json:"board,omitempty"`
-	Result   string  `json:"result,omitempty"`
+	Res      ResponseType `json:"response"`
+	Opponent *Player      `json:"opponent,omitempty"`
+	YourTurn bool         `json:"yourturn"`
+	Symbol   string       `json:"symbol,omitempty"`
+	Board    *Board       `json:"board,omitempty"`
+	Result   string       `json:"result,omitempty"`
 }
 
 func CreateWaitResponse() Response {

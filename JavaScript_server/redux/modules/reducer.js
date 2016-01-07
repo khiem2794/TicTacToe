@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import multireducer from 'multireducer';
 import { routerStateReducer } from 'redux-router';
 
 import facebookauth from './facebookauth';

@@ -1,12 +1,12 @@
 import React, {Component, PropTypes} from 'react';
 
 export default class PlayButton extends Component {
-  constructor(props) {
-    super(props);
-  }
   static propTypes = {
     startPlaying: PropTypes.func.isRequired,
     waiting: PropTypes.bool,
+  }
+  constructor(props) {
+    super(props);
   }
   render() {
     return (

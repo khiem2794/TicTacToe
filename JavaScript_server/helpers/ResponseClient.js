@@ -6,15 +6,15 @@ const END_RESPONSE = 'end';
 export default function ResponseType(res, actions) {
   const { wait, ready, change, end } = actions;
   if (res.response === WAIT_RESPONSE) {
-  	wait();
+    wait();
   }
   if (res.response === READY_RESPONSE) {
-  	ready(res);
+    ready(res);
   }
   if (res.response === BOARD_RESPONSE) {
-  	change(res);
+    change(res);
   }
   if (res.response === END_RESPONSE) {
-    end(res)
+    end(res);
   }
 }

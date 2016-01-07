@@ -42,12 +42,11 @@ export default class CaroApp extends Component {
   		{user &&
   			<div className="col-md-3">
   				<Nav bsStyle="pills" stacked>
-					<LinkContainer to='/'><NavItem eventKey={1}>Home</NavItem></LinkContainer>
-	        		<LinkContainer to='/overview'><NavItem eventKey={2}>Overview</NavItem></LinkContainer>
-					<LinkContainer to='/profile'><NavItem eventKey={3}>Profile</NavItem></LinkContainer>
-					<LinkContainer to='/ranking'><NavItem eventKey={4}>Ranking</NavItem></LinkContainer>
-					<LinkContainer to='/spectate'><NavItem eventKey={5}>Spectate</NavItem></LinkContainer>
-					<LinkContainer to='/caro'><NavItem eventKey={6}>Play</NavItem></LinkContainer>
+					<LinkContainer to="/"><NavItem eventKey={1}>Home</NavItem></LinkContainer>
+					<LinkContainer to="/profile"><NavItem eventKey={3}>Profile</NavItem></LinkContainer>
+					<LinkContainer to="/ranking"><NavItem eventKey={4}>Ranking</NavItem></LinkContainer>
+					<LinkContainer to="/spectate"><NavItem eventKey={5}>Spectate</NavItem></LinkContainer>
+					<LinkContainer to="/caro"><NavItem eventKey={6}>Play</NavItem></LinkContainer>
 				</Nav>
 			</div>}
   		{this.props.children}

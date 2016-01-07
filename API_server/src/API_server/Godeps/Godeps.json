@@ -3,6 +3,24 @@
 	"GoVersion": "go1.5.1",
 	"Deps": [
 		{
+			"ImportPath": "github.com/Sirupsen/logrus",
+			"Comment": "v0.8.7-53-g446d1c1",
+			"Rev": "446d1c146faa8ed3f4218f056fcd165f6bcfda81"
+		},
+		{
+			"ImportPath": "github.com/cenkalti/backoff",
+			"Rev": "4dc77674aceaabba2c7e3da25d4c823edfb73f99"
+		},
+		{
+			"ImportPath": "github.com/dancannon/gorethink",
+			"Comment": "v1.2.0",
+			"Rev": "a124c9663325ed9f7fb669d17c69961b59151e6e"
+		},
+		{
+			"ImportPath": "github.com/golang/protobuf/proto",
+			"Rev": "2402d76f3d41f928c7902a765dfc872356dd3aad"
+		},
+		{
 			"ImportPath": "github.com/gorilla/context",
 			"Rev": "1c83b3eabd45b6d76072b66b746c20815fb2872d"
 		},
@@ -15,12 +33,16 @@
 			"Rev": "e95799a481bbcc3d01c2ad5178524cb8bec9f370"
 		},
 		{
-			"ImportPath": "github.com/gorilla/sessions",
-			"Rev": "f7261893ca3ea922c30eabe742c036d2c1de6e0a"
-		},
-		{
 			"ImportPath": "github.com/gorilla/websocket",
 			"Rev": "844dd6d40e1a9215ef4c8a204bfc839fcf5dd5dd"
+		},
+		{
+			"ImportPath": "github.com/hailocab/go-hostpool",
+			"Rev": "50839ee41f32bfca8d03a183031aa634b2dc1c64"
+		},
+		{
+			"ImportPath": "gopkg.in/fatih/pool.v2",
+			"Rev": "cba550ebf9bce999a02e963296d4bc7a486cb715"
 		}
 	]
 }

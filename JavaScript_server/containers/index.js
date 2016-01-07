@@ -3,7 +3,6 @@ export CaroHomepage from './CaroHomepage/CaroHomepage';
 export CaroApp from './CaroApp/CaroApp';
 export FacebookAuthCallBack from './Auth/FacebookAuthCallBack';
 export Landing from './Landing/Landing';
-export Overview from './Overview/Overview';
 export Spectate from './Spectate/Spectate';
 export Profile from	'./Profile/Profile';
 export Ranking from './Ranking/Ranking';

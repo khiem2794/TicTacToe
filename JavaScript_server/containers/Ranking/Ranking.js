@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 
 export default class Ranking extends Component {
   render() {
-  	return (
+    return (
   		<div>
   			RANKING PAGE
   		</div>
-  	)
+  	);
   }
 }

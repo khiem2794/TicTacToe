@@ -8,7 +8,6 @@ import {
     FacebookAuthCallBack,
     Landing,
     Ranking,
-    Overview,
     Profile,
     Spectate,
     Caro
@@ -48,14 +47,13 @@ export default (store) => {
    */
   return (
     <Route path="/" component={CaroApp}>
-    
+
       <Route onEnter={toLanding}>
         <IndexRoute component={CaroHomepage}/>
-        <Route path='/overview' component={Overview} />
-        <Route path='/profile' component={Profile} />
-        <Route path='/ranking' component={Ranking} />
-        <Route path='/spectate' component={Spectate} />
-        <Route path='/caro' component={Caro} />
+        <Route path="/profile" component={Profile} />
+        <Route path="/ranking" component={Ranking} />
+        <Route path="/spectate" component={Spectate} />
+        <Route path="/caro" component={Caro} />
       </Route>
 
       <Route onEnter={notLogin}>

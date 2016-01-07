@@ -1,18 +1,18 @@
 const ACTION_STARTING = 'start';
 const ACTION_MOVE = 'move';
 
-export function startMSG(){
+export function startMSG() {
   return {
-  	message: ACTION_STARTING
-  }
+    message: ACTION_STARTING
+  };
 }
 
-export function moveMSG(x, y){
+export function moveMSG(px, py) {
   return {
-  	message: ACTION_MOVE,
-  	cell: {
-  	  x: x,
-  	  y: y
-  	}
-  }
+    message: ACTION_MOVE,
+    cell: {
+      x: px,
+      y: py
+    }
+  };
 }

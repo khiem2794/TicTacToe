@@ -1,12 +1,13 @@
 package handlers
 
 import (
-	"encoding/json"
-	"net/http"
-
 	"API_server/OAuth"
+	"API_server/store"
 	"API_server/utils/cookie"
 	"API_server/utils/logs"
+	"encoding/json"
+	"net/http"
+	"time"
 )
 
 var (
@@ -15,13 +16,17 @@ var (
 
 type AuthCtrl struct {
 	*OAuth.Config
+	*store.Store
 }
 type LoginReq struct {
 	Code string `json:"code"`
 }
 
-func NewAuthCtrl(authCfg *OAuth.Config) *AuthCtrl {
-	return &AuthCtrl{authCfg}
+func NewAuthCtrl(authCfg *OAuth.Config, store *store.Store) *AuthCtrl {
+	return &AuthCtrl{
+		Config: authCfg,
+		Store:  store,
+	}
 }
 
 func (this *AuthCtrl) FacebookLogin(w http.ResponseWriter, r *http.Request) {
@@ -53,7 +58,21 @@ func (this *AuthCtrl) FacebookLogin(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Error getting profile FB"))
 		return
 	}
-
+	user, err := this.Store.GetUser(profileFB.Id)
+	if err != nil {
+		user = &store.User{
+			Id:             profileFB.Id,
+			Name:           profileFB.Name,
+			FBAc:           profileFB.AccessToken,
+			Match:          []string{},
+			Win:            0,
+			RegisteredTime: time.Now(),
+		}
+		err = this.Store.CreateUser(user)
+		if err != nil {
+			panic(err)
+		}
+	}
 	AuthCookie, err := cookie.NewCookie(profileFB.Id, profileFB.Name)
 	if err != nil {
 		authLogger.Println(err)

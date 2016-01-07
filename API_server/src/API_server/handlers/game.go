@@ -3,6 +3,7 @@ package handlers
 import (
 	"API_server/Caro"
 	"API_server/OAuth"
+	"API_server/store"
 	"API_server/utils/logs"
 	"net/http"
 
@@ -22,12 +23,16 @@ var (
 
 type GameCtrl struct {
 	*Caro.Pool
+	*store.Store
 }
 
-func NewGameCtrl() *GameCtrl {
+func NewGameCtrl(store *store.Store) *GameCtrl {
 	p := Caro.NewPool()
 	go p.FieldManager()
-	return &GameCtrl{p}
+	return &GameCtrl{
+		Pool:  p,
+		Store: store,
+	}
 }
 
 func (this *GameCtrl) CaroHandler(w http.ResponseWriter, r *http.Request) {

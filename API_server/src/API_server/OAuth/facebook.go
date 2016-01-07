@@ -47,6 +47,11 @@ func SetupOAuth(flConfigFile string) (*Config, error) {
 	return &cfg, nil
 }
 
+func (this *Config) IsExpired(ac string) bool {
+
+	return false
+}
+
 func (this *Config) RequestTokenFB(code string) (string, error) {
 	res, err := http.Get("https://graph.facebook.com/oauth/access_token?client_id=" + this.Facebook.AppId + "&redirect_uri=" + this.Facebook.CallbackUrl + "&client_secret=" + this.Facebook.AppSecret + "&code=" + code)
 	if err != nil {
@@ -87,5 +92,6 @@ func (this *Config) GetProfileFB(accessToken string) (*ProfileFB, error) {
 	if err != nil {
 		return nil, err
 	}
+	profileFB.AccessToken = accessToken
 	return &profileFB, nil
 }

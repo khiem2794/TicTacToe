@@ -10,7 +10,6 @@ export default class CaroHomepage extends Component {
         <FacebookLogin />
       </div>
   	</div>
-
   	);
   }
 }
