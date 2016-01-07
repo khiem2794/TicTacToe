@@ -8,4 +8,4 @@ npm-debug.log
 API_server/bin
 API_server/pkg
 API_server/src/github.com
-rethinkdb_data
+rethinkdb_data/
