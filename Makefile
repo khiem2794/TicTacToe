@@ -1,5 +1,4 @@
 export GOPATH=$(PWD)/API_server
-export PATH=$(PATH):$(GOPATH)
 
 save:
 	cd ./API_server/src/API_server && godep save
