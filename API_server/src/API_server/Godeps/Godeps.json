@@ -1,6 +1,6 @@
 {
 	"ImportPath": "API_server",
-	"GoVersion": "go1.5.1",
+	"GoVersion": "go1.5",
 	"Deps": [
 		{
 			"ImportPath": "github.com/Sirupsen/logrus",
@@ -39,6 +39,10 @@
 		{
 			"ImportPath": "github.com/hailocab/go-hostpool",
 			"Rev": "50839ee41f32bfca8d03a183031aa634b2dc1c64"
+		},
+		{
+			"ImportPath": "golang.org/x/sys/unix",
+			"Rev": "833a04a10549a95dc34458c195cbad61bbb6cb4d"
 		},
 		{
 			"ImportPath": "gopkg.in/fatih/pool.v2",

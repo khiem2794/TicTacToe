@@ -4,7 +4,7 @@ save:
 	cd ./API_server/src/API_server && godep save
 
 install:
-	cd ./API_server/src/API_server && godep restore -v
+	cd ./API_server/src/API_server && godep restore
 
 build:
 	cd ./API_server/src/API_server && go install
