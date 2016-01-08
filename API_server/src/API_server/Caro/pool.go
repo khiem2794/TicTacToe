@@ -2,7 +2,6 @@ package Caro
 
 import (
 	"API_server/store"
-	"log"
 	"sync"
 	"time"
 )
@@ -80,7 +79,6 @@ func (this *Pool) CloseRoom(r *Room) {
 	delete(this.Fighter, r.B)
 	r.Match.Turn = r.Board.Turn
 	if r.Winner.FbId != "" {
-		log.Println("WIN/LOSE")
 		r.Match.Winner = r.Winner.FbId
 		this.Store.UpdateWin(r.Winner.FbId)
 	}
