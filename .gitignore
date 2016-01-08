@@ -8,4 +8,5 @@ npm-debug.log
 API_server/bin
 API_server/pkg
 API_server/src/github.com
+API_server/src/gopkg.in
 rethinkdb_data/

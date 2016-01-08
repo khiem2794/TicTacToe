@@ -26,7 +26,7 @@
 		},
 		{
 			"ImportPath": "github.com/gorilla/mux",
-			"Rev": "9c068cf16d982f8bd444b8c352acbeec34c4fe5b"
+			"Rev": "26a6070f849969ba72b72256e9f14cf519751690"
 		},
 		{
 			"ImportPath": "github.com/gorilla/securecookie",
@@ -34,7 +34,7 @@
 		},
 		{
 			"ImportPath": "github.com/gorilla/websocket",
-			"Rev": "844dd6d40e1a9215ef4c8a204bfc839fcf5dd5dd"
+			"Rev": "3986be78bf859e01f01af631ad76da5b269d270c"
 		},
 		{
 			"ImportPath": "github.com/hailocab/go-hostpool",
