@@ -27,7 +27,7 @@ type GameCtrl struct {
 }
 
 func NewGameCtrl(store *store.Store) *GameCtrl {
-	p := Caro.NewPool()
+	p := Caro.NewPool(store)
 	go p.FieldManager()
 	return &GameCtrl{
 		Pool:  p,
@@ -55,13 +55,7 @@ func (this *GameCtrl) CaroHandler(w http.ResponseWriter, r *http.Request) {
 		this.Pool.RemovePleb(player)
 		conn.Close()
 	}()
-
-	for p, _ := range this.Pool.Pleb {
-		gameLogger.Println(p.Name, "online")
-	}
-
 	go player.HandleResponse()
-
 	for {
 		_, message, err := conn.ReadMessage()
 		if err != nil {

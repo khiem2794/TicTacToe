@@ -58,8 +58,7 @@ func (this *AuthCtrl) FacebookLogin(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Error getting profile FB"))
 		return
 	}
-	user, err := this.Store.GetUser(profileFB.Id)
-	if err != nil {
+	if user, err := this.Store.GetUser(profileFB.Id); err != nil {
 		user = &store.User{
 			Id:             profileFB.Id,
 			Name:           profileFB.Name,

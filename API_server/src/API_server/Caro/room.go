@@ -1,9 +1,16 @@
 package Caro
 
+import (
+	"API_server/store"
+)
+
 type Room struct {
-	A     *Player
-	B     *Player
-	Board *Board
+	A        *Player
+	B        *Player
+	Winner   *Player
+	Board    *Board
+	Match    *store.Match
+	Complete chan *Room
 }
 
 func (this *Room) Start() {
@@ -22,9 +29,22 @@ func (this *Room) BroadcastMove(player *Player) {
 	if player != this.A {
 		isATurn = true
 	}
-	if end := this.Board.CheckWin(player.Symbol); end {
+	if draw := this.Board.IsDraw(); draw {
+		this.A.AddResponse(CreateEndResponse(false, this.Board))
+		this.B.AddResponse(CreateEndResponse(false, this.Board))
+		this.Winner = &Player{}
+		this.Complete <- this
+		return
+	}
+	if end := this.Board.IsWin(player.Symbol); end {
 		this.A.AddResponse(CreateEndResponse(!isATurn, this.Board))
 		this.B.AddResponse(CreateEndResponse(isATurn, this.Board))
+		if isATurn {
+			this.Winner = this.B
+		} else {
+			this.Winner = this.A
+		}
+		this.Complete <- this
 		return
 	}
 	this.A.AddResponse(CreateBoardResponse(isATurn, this.Board))

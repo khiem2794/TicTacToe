@@ -74,7 +74,7 @@ func HaveCross(s []Cell, c Cell) bool {
 	return false
 }
 
-func (this *Board) CheckWin(symbol string) bool {
+func (this *Board) IsWin(symbol string) bool {
 	if symbol == SYMBOL_O {
 		lastMove := this.O[len(this.O)-1]
 		if HaveRow(this.O, lastMove) || HaveCol(this.O, lastMove) || HaveCross(this.O, lastMove) {
@@ -86,6 +86,13 @@ func (this *Board) CheckWin(symbol string) bool {
 		if HaveRow(this.X, lastMove) || HaveCol(this.X, lastMove) || HaveCross(this.X, lastMove) {
 			return true
 		}
+	}
+	return false
+}
+
+func (this *Board) IsDraw() bool {
+	if len(this.X)+len(this.O) == BOARD_SIZE*BOARD_SIZE {
+		return true
 	}
 	return false
 }
