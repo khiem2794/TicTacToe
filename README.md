@@ -1,26 +1,32 @@
 [![Build Status](https://travis-ci.org/ngockhiem27/caro-nhk.svg?branch=master)](https://travis-ci.org/ngockhiem27/caro-nhk)
 
 
-## Installation
-
+# **Set up**
+##### Install node packages
 ```bash
 npm install
+```
+##### Install go packages
+```bash
 make install
 ```
-## Running API Server
+##### Building API Server (change config in config-default.json)
 
 ```bash
 make build
+```
+##### Running API Server (default port 3030)
+```bash
 make run-server
 ```
 
-## Building and Running Dev Server
+##### Running Development Server (default port 3000)
 
 ```bash
 make run-client-dev
 ```
 
-## Building and Running Production Server
+##### Running Production Server (default port 3000)
 
 ```bash
 make run-client-prod
