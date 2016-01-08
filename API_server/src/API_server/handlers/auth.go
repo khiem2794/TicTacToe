@@ -108,3 +108,10 @@ func (this *AuthCtrl) LoadAuth(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(resjs)
 }
+
+func (this *AuthCtrl) Logout(w http.ResponseWriter, r *http.Request) {
+	cookie.ClearCookie(w, r)
+	w.Header().Set("Content-Type", "application/json")
+	resjs, _ := json.Marshal(map[string]bool{"logout": true})
+	w.Write(resjs)
+}

@@ -64,12 +64,14 @@ export default function reducer(state = initialState, action = {}) {
         loggingOut: true
       };
     case LOGOUT_SUCCESS:
+      console.log("LOG OUT SC");
       return {
         ...state,
         loggingOut: false,
         user: null
       };
     case LOGOUT_FAIL:
+      console.log("LOG OUT FL");
       return {
         ...state,
         loggingOut: false,

@@ -9,3 +9,4 @@ export FacebookLogin from './FacebookLogin/FacebookLogin';
 export PlayButton from './PlayButton/PlayButton';
 export CaroBoard from './CaroBoard/CaroBoard';
 export CaroResult from './CaroResult/CaroResult';
+export LogoutButton from './LogoutButton/LogoutButton';

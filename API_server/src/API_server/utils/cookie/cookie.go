@@ -71,7 +71,11 @@ func GetProfile(r *http.Request) (*OAuth.ProfileFB, error) {
 	return profileFB, nil
 }
 
-func ClearCookie(w http.ResponseWriter, cookie *Cookie) {
-	cookie.Cookie.MaxAge = -1
-	http.SetCookie(w, cookie.Cookie)
+func ClearCookie(w http.ResponseWriter, r *http.Request) {
+	var cookie = &http.Cookie{
+		Name:   COOKIE_NAME,
+		Path:   "/",
+		MaxAge: -1,
+	}
+	http.SetCookie(w, cookie)
 }

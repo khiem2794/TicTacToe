@@ -80,6 +80,7 @@ func (s *setupStruct) setupRoutes() {
 	{
 		router.HandleFunc("/login/facebook", normal(authCtrl.FacebookLogin)).Methods("POST")
 		router.HandleFunc("/loadAuth", normal(authCtrl.LoadAuth)).Methods("GET")
+		router.HandleFunc("/logout", normal(authCtrl.Logout)).Methods("GET")
 	}
 
 	gameCtrl := handlers.NewGameCtrl(store)

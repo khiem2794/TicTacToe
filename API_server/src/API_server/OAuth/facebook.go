@@ -25,7 +25,7 @@ type Config struct {
 type ProfileFB struct {
 	Name        string `json:"name"`
 	Id          string `json:"id"`
-	AccessToken string `json:"-,omitempty"`
+	AccessToken string `json:"-"`
 }
 
 func SetupOAuth(flConfigFile string) (*Config, error) {

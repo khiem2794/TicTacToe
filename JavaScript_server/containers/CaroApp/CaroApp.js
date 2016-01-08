@@ -32,6 +32,8 @@ export default class CaroApp extends Component {
   componentWillReceiveProps(nextProps) {
     if (!this.props.user && nextProps.user) {
       this.props.pushState(null, '/');
+    } else if (this.props.user && !nextProps.user) {
+      this.props.pushState(null, '/landing');
     }
   }
   render() {
