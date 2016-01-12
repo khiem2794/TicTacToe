@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"API_server/OAuth"
+	"API_server/domain"
 	"API_server/store"
 	"API_server/utils/cookie"
 	"API_server/utils/logs"
@@ -59,7 +60,7 @@ func (this *AuthCtrl) FacebookLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if user, err := this.Store.GetUser(profileFB.Id); err != nil {
-		user = &store.User{
+		user = &domain.User{
 			Id:             profileFB.Id,
 			Name:           profileFB.Name,
 			FBAc:           profileFB.AccessToken,

@@ -1,6 +1,7 @@
 package Caro
 
 import (
+	"API_server/domain"
 	"API_server/store"
 	"sync"
 	"time"
@@ -29,6 +30,7 @@ func (this *Pool) AddPleb(pleb *Player) {
 }
 
 func (this *Pool) RemovePleb(pleb *Player) {
+	this.RemoveFighter(pleb)
 	delete(this.Pleb, pleb)
 }
 
@@ -49,8 +51,8 @@ func (this *Pool) RegisterRoom(a *Player, b *Player) bool {
 		return false
 	}
 	this.Fighter[a] = true
-	match := &store.Match{
-		Status:      store.STATUS_PLAYING,
+	match := &domain.Match{
+		Status:      domain.STATUS_PLAYING,
 		Player:      [2]string{a.FbId, b.FbId},
 		Turn:        0,
 		CreatedTime: time.Now(),
@@ -82,7 +84,7 @@ func (this *Pool) CloseRoom(r *Room) {
 		r.Match.Winner = r.Winner.FbId
 		this.Store.UpdateWin(r.Winner.FbId)
 	}
-	r.Match.Status = store.STATUS_FINISHED
+	r.Match.Status = domain.STATUS_FINISHED
 	err := this.Store.UpdateMatch(r.Match)
 	if err != nil {
 		panic(err)

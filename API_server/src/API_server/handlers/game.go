@@ -52,6 +52,7 @@ func (this *GameCtrl) CaroHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	this.Pool.AddPleb(player)
 	defer func() {
+		close(player.Response)
 		this.Pool.RemovePleb(player)
 		conn.Close()
 	}()

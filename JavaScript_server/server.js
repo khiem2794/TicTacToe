@@ -11,7 +11,7 @@ import ApiClient from './helpers/ApiClient';
 import Html from './helpers/Html';
 import PrettyError from 'pretty-error';
 import http from 'http';
-import SocketIo from 'socket.io';
+// import SocketIo from 'socket.io';
 
 import {ReduxRouter} from 'redux-router';
 import createHistory from 'history/lib/createMemoryHistory';
@@ -65,6 +65,10 @@ app.get('/auth/facebook',
 });
 
 app.use((req, res) => {
+  // set userAgent for material-ui
+  GLOBAL.navigator = {
+    userAgent: req.headers['user-agent']
+  }
   if (__DEVELOPMENT__) {
     // Do not cache webpack stats: the script file would change since
     // hot module replacement is enabled in the development env
@@ -123,10 +127,10 @@ app.use((req, res) => {
 });
 
 if (config.port) {
-  if (config.isProduction) {
-    const io = new SocketIo(server);
-    io.path('/api/ws');
-  }
+  // if (config.isProduction) {
+  //   const io = new SocketIo(server);
+  //   io.path('/api/ws');
+  // }
 
   server.listen(config.port, (err) => {
     if (err) {

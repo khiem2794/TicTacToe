@@ -4,15 +4,18 @@ import (
 	"strings"
 
 	"API_server/api/rethink"
-
+	"API_server/domain"
 	"API_server/utils/logs"
-
-	"API_server/store"
 
 	"github.com/dancannon/gorethink"
 )
 
 var l = logs.New("dbscript")
+
+const (
+	WIN_INDEX  = "win"
+	NAME_INDEX = "name"
+)
 
 type RethinkScript struct {
 	re     *rethink.Instance
@@ -54,18 +57,23 @@ func (this *RethinkScript) Setup() error {
 }
 
 func (this *RethinkScript) createTableUser() error {
-	err := this.re.Exec(this.re.DB().TableCreate(store.USER_TABLE))
+	err := this.re.Exec(this.re.DB().TableCreate(domain.USER_TABLE))
 	if err != nil {
 		return err
 	}
 
-	l.Printf("Create index: name")
-	err = this.re.Exec(this.re.Table(store.USER_TABLE).IndexCreate("name"))
+	l.Printf("Create index:", WIN_INDEX)
+	err = this.re.Exec(this.re.Table(domain.USER_TABLE).IndexCreate(WIN_INDEX))
+	if err != nil {
+		return err
+	}
+	l.Printf("Create index:", NAME_INDEX)
+	err = this.re.Exec(this.re.Table(domain.USER_TABLE).IndexCreate(NAME_INDEX))
 	if err != nil {
 		return err
 	}
 
-	err = this.re.Exec(this.re.Table(store.USER_TABLE).IndexWait())
+	err = this.re.Exec(this.re.Table(domain.USER_TABLE).IndexWait())
 	if err != nil {
 		return err
 	}
@@ -74,7 +82,7 @@ func (this *RethinkScript) createTableUser() error {
 }
 
 func (this *RethinkScript) createTableMatch() error {
-	err := this.re.Exec(this.re.DB().TableCreate(store.MATCH_TABLE))
+	err := this.re.Exec(this.re.DB().TableCreate(domain.MATCH_TABLE))
 	if err != nil {
 		return err
 	}

@@ -1,7 +1,7 @@
 package Caro
 
 import (
-	"API_server/store"
+	"API_server/domain"
 )
 
 type Room struct {
@@ -9,7 +9,7 @@ type Room struct {
 	B        *Player
 	Winner   *Player
 	Board    *Board
-	Match    *store.Match
+	Match    *domain.Match
 	Complete chan *Room
 }
 

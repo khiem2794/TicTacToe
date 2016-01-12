@@ -30,12 +30,13 @@ func NewInstance(opts r.ConnectOpts) (*Instance, error) {
 	return ins, nil
 }
 
-func (this *Instance) Connect() {
+func (this *Instance) Connect() *r.Session {
 	if session, err := r.Connect(this.opts); err == nil {
 		this.session = session
 	} else {
 		l.Fatalln("Cant connect to Rethink server")
 	}
+	return this.session
 }
 
 func (this *Instance) DB() r.Term {
@@ -51,14 +52,35 @@ func (this *Instance) Table(name string) r.Term {
 	return r.DB(this.db).Table(name)
 }
 
-func (this *Instance) Run(term r.Term) (*r.Cursor, error) {
-	this.Connect()
-	return term.Run(this.session)
+func (this *Instance) OrderByDesc(term r.Term, index string) r.Term {
+	return term.OrderBy(r.OrderByOpts{
+		Index: r.Desc(index),
+	})
 }
 
-func (this *Instance) RunWrite(term r.Term) (r.WriteResponse, error) {
+func (this *Instance) OrderByAsc(term r.Term, index string) r.Term {
+	return term.OrderBy(r.OrderByOpts{
+		Index: index,
+	})
+}
+
+func (this *Instance) Run(term r.Term, limit ...int) (*r.Cursor, error) {
 	this.Connect()
-	return term.RunWrite(this.session)
+	if len(limit) == 0 {
+		return term.Run(this.session)
+	} else {
+		return term.Limit(limit[0]).Run(this.session)
+	}
+
+}
+
+func (this *Instance) RunWrite(term r.Term, limit ...int) (r.WriteResponse, error) {
+	this.Connect()
+	if len(limit) == 0 {
+		return term.RunWrite(this.session)
+	} else {
+		return term.Limit(limit[0]).RunWrite(this.session)
+	}
 }
 
 func (this *Instance) One(term r.Term, result interface{}) error {

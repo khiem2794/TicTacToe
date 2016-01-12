@@ -65,7 +65,7 @@ func (s *setupStruct) setupRethink() {
 		l.Fatalln("Error generating data", err)
 	}
 }
-func (s *setupStruct) setupRoutes() {
+func (this *setupStruct) setupRoutes() {
 	commonMids := commonMiddlewares()
 
 	normal := func(h http.HandlerFunc) http.HandlerFunc {
@@ -75,12 +75,12 @@ func (s *setupStruct) setupRoutes() {
 	}
 
 	router := mux.NewRouter()
-	store := store.NewStore(s.DB)
-	authCtrl := handlers.NewAuthCtrl(s.AuthConfig, store)
+	store := store.NewStore(this.DB)
+	authCtrl := handlers.NewAuthCtrl(this.AuthConfig, store)
 	{
-		router.HandleFunc("/login/facebook", normal(authCtrl.FacebookLogin)).Methods("POST")
-		router.HandleFunc("/loadAuth", normal(authCtrl.LoadAuth)).Methods("GET")
-		router.HandleFunc("/logout", normal(authCtrl.Logout)).Methods("GET")
+		router.Handle("/login/facebook", normal(authCtrl.FacebookLogin)).Methods("POST")
+		router.Handle("/loadAuth", normal(authCtrl.LoadAuth)).Methods("GET")
+		router.Handle("/logout", normal(authCtrl.Logout)).Methods("GET")
 	}
 
 	gameCtrl := handlers.NewGameCtrl(store)
@@ -88,5 +88,11 @@ func (s *setupStruct) setupRoutes() {
 		router.Handle("/ws/caro", normal(gameCtrl.CaroHandler))
 	}
 
-	s.Handler = context.ClearHandler(router)
+	restCtrl := handlers.NewRestCtrl(store)
+	{
+		router.Handle("/api/rank", normal(restCtrl.RankHandler)).Methods("GET")
+		router.Handle("/api/{fbid}", normal(restCtrl.ProfileHandler)).Methods("GET")
+	}
+
+	this.Handler = context.ClearHandler(router)
 }

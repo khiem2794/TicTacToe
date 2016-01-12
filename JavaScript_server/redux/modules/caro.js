@@ -4,6 +4,7 @@ const ACTION_READY = 'caro/READY';
 const ACTION_CHANGE = 'caro/CHANGE';
 const ACTION_END = 'caro/END';
 const ACTION_RESTART = 'caro/RESTART';
+const ACTION_RESET = 'caro/RESET';
 
 const initialState = {
   playing: false,
@@ -72,6 +73,8 @@ export default function caro(state = initialState, action) {
         result: false,
         socket: state.socket
       };
+    case ACTION_RESET:
+      return initialState;
     default:
       return state;
   }
@@ -118,5 +121,11 @@ export function end(res) {
 export function restart() {
   return {
     type: ACTION_RESTART
+  };
+}
+
+export function reset() {
+  return {
+    type: ACTION_RESET
   };
 }
