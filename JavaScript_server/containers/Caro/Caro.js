@@ -6,6 +6,8 @@ import config from '../../config';
 import * as MessageClient from 'helpers/MessageClient';
 import responseClient from 'helpers/ResponseClient';
 
+import Paper from 'material-ui/lib/paper';
+
 @connect(
   state => ({
     playing: state.caro.playing,
@@ -56,20 +58,22 @@ export default class Caro extends Component {
     const { waiting, playing, result, win, restart, yourturn, board } = this.props;
     return (
   		<div>
-  			{waiting && <PlayButton startPlaying={this.startPlaying} waiting={waiting}/> }
-  			{!playing && !waiting && <PlayButton startPlaying={this.startPlaying} waiting={false}/> }
-  			{playing && !waiting &&
-  				<div>
-            {result ? <CaroResult win={win} restart={restart}/>
-                    : <div>
-                        <p>Play against {this.props.opponent.name}</p>
-                        <p>You: {this.props.symbol}</p>
-                        <p>{this.props.opponent.name}: {this.props.opponent.symbol}</p>
-                        <div>{yourturn ? 'Your turn' : this.props.opponent.name + "'s turn"}<br /> Turn: {board.turn}</div>
-                      </div>}
-  					<CaroBoard moveMSG={MessageClient.moveMSG} board={board} yourturn={yourturn}/>
-  				</div>
-  			}
+        <Paper zDepth={3} style={{ textAlign: 'center' }}>
+    			{waiting && <PlayButton startPlaying={this.startPlaying} waiting={waiting}/> }
+    			{!playing && !waiting && <PlayButton startPlaying={this.startPlaying} waiting={false}/> }
+    			{playing && !waiting &&
+    				<div>
+              {result ? <CaroResult win={win} restart={restart}/>
+                      : <div>
+                          <p>Play against {this.props.opponent.name}</p>
+                          <p>You: {this.props.symbol}</p>
+                          <p>{this.props.opponent.name}: {this.props.opponent.symbol}</p>
+                          <div>{yourturn ? 'Your turn' : this.props.opponent.name + "'s turn"}<br /> Turn: {board.turn}</div>
+                        </div>}
+    					<CaroBoard moveMSG={MessageClient.moveMSG} board={board} yourturn={yourturn}/>
+    				</div>
+    			}
+        </Paper>
   		</div>
   	);
   }

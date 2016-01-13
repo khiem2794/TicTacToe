@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import {connect} from 'react-redux';
 
+import Paper from 'material-ui/lib/paper';
+
 @connect(
   state => ({
     user: state.facebookauth.user
@@ -14,9 +16,9 @@ export default class CaroHomepage extends Component {
     return (
       <div>
         {user &&  
-          <div>
-            <div>Welcome {this.props.user.name}</div>
-          </div>}
+          <Paper zDepth={3} style={{ textAlign: 'center' }}>
+            <p>HOMEPAGE</p>
+          </Paper>}
       </div>
   	);
   }

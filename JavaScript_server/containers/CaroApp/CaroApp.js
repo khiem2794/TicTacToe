@@ -12,6 +12,12 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 import { ProfileBox } from 'components';
 import {logout} from 'redux/modules/facebookauth';
 
+import Theme from 'material-ui/lib/styles/raw-themes/dark-raw-theme';
+import ThemeManager from 'material-ui/lib/styles/theme-manager';
+import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
+
+Theme.palette.canvasColor = '#242f39';
+
 function fetchData(getState, dispatch) {
   const promises = [];
   if (!getState().facebookauth.user && !isAuthLoaded(getState()) ) {
@@ -19,7 +25,6 @@ function fetchData(getState, dispatch) {
   }
   return Promise.all(promises);
 }
-
 @connectData(fetchData)
 @connect(
   state => ({
@@ -27,6 +32,7 @@ function fetchData(getState, dispatch) {
   }),
   {pushState, logout})
 
+@ThemeDecorator(ThemeManager.getMuiTheme(Theme))
 export default class CaroApp extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
@@ -68,9 +74,7 @@ export default class CaroApp extends Component {
         </div>}
 
       <div className="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-        <Paper zDepth={3} style={center}>
           {this.props.children}
-        </Paper>
       </div>
   	</div>
   	);

@@ -16,6 +16,7 @@ export default function reducer(state = initialState, action = {}) {
   	  	...state
   	  };
   	case LOAD_PROFILE_SUCCESS:
+  	  console.log(action.result);
   	  return {
   	  	...state,
   	  	profile: action.result

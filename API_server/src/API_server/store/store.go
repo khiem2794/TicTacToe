@@ -5,7 +5,6 @@ import (
 	"API_server/dbscript"
 	"API_server/domain"
 	"encoding/json"
-	"time"
 )
 
 type Store struct {
@@ -83,6 +82,21 @@ func (this *Store) GetMatch(matchid string) (match *domain.Match, err error) {
 	return
 }
 
+func (this *Store) GetUserRank(userId string) int {
+	cursor, err := this.re.Run(this.re.OrderByDesc(this.re.Table(domain.USER_TABLE), dbscript.WIN_INDEX))
+	if err != nil {
+		return -1
+	}
+	var user *domain.User
+	defer cursor.Close()
+	for i := 1; cursor.Next(&user); i++ {
+		if userId == user.Id {
+			return i
+		}
+	}
+	return -1
+}
+
 func (this *Store) GetAverageTurn(userId string, matches []string) (averageTurn int, err error) {
 	if len(matches) == 0 {
 		return 0, nil
@@ -93,7 +107,7 @@ func (this *Store) GetAverageTurn(userId string, matches []string) (averageTurn 
 		if err != nil {
 			return 0, err
 		}
-		totalTurn = totalTurn + match.Turn/2
+		totalTurn = totalTurn + match.Turn
 	}
 	averageTurn = totalTurn / len(matches)
 	return
@@ -118,11 +132,11 @@ func (this *Store) GetProfile(userId string, matchLimit int) ([]byte, error) {
 		matches = append(matches, match)
 	}
 	type MatchResponse struct {
-		Id       string    `json:"id"`
-		Opponent string    `json:"opponent"`
-		Winner   string    `json:"winner"`
-		Turn     int       `json:"turn"`
-		Time     time.Time `json:"time"`
+		Id       string `json:"id"`
+		Opponent string `json:"opponent"`
+		Winner   string `json:"winner"`
+		Turn     int    `json:"turn"`
+		Time     string `json:"time"`
 	}
 	type ProfileResponse struct {
 		Id          string           `json:"id"`
@@ -130,6 +144,7 @@ func (this *Store) GetProfile(userId string, matchLimit int) ([]byte, error) {
 		FBprofile   string           `json:"fbprofile"`
 		TotalMatch  int              `json:"totalmatch"`
 		Win         int              `json:"win"`
+		Rank        int              `json:"rank"`
 		AverageTurn int              `json:"averageturn"`
 		Matches     []*MatchResponse `json:"matches"`
 	}
@@ -149,7 +164,7 @@ func (this *Store) GetProfile(userId string, matchLimit int) ([]byte, error) {
 			Opponent: opponent,
 			Winner:   match.Winner,
 			Turn:     match.Turn,
-			Time:     match.CreatedTime,
+			Time:     match.CreatedTime.Format("15:04, _2-Jan-2006"),
 		}
 		matchResponse = append(matchResponse, mr)
 	}
@@ -158,6 +173,7 @@ func (this *Store) GetProfile(userId string, matchLimit int) ([]byte, error) {
 		Name:        user.Name,
 		FBprofile:   "https://facebook.com/" + user.Id,
 		TotalMatch:  len(user.Match),
+		Rank:        this.GetUserRank(userId),
 		Win:         win,
 		AverageTurn: averageTurn,
 		Matches:     matchResponse,
@@ -214,7 +230,7 @@ func (this *Store) GetMatchInfo(matchId string) ([]byte, error) {
 		Player [2]*PlayerResponse `json:"player"`
 		Winner *PlayerResponse    `json:"winner"`
 		Turn   int                `json:"turn"`
-		Time   time.Time          `json:"time"`
+		Time   string             `json:"time"`
 	}
 	match, err := this.GetMatch(matchId)
 	if err != nil {
@@ -240,7 +256,7 @@ func (this *Store) GetMatchInfo(matchId string) ([]byte, error) {
 		Player: player,
 		Winner: winner,
 		Turn:   match.Turn,
-		Time:   match.CreatedTime,
+		Time:   match.CreatedTime.Format("15:04, _2-Jan-2006"),
 	}
 	res, err := json.Marshal(matchResponse)
 	return res, err

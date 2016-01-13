@@ -38,14 +38,10 @@ func (this *RestCtrl) ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(res)
 }
 
-func (this *RestCtrl) UserRankHandler(w http.ResponseWriter, r *http.Request) {
-
-}
-
 func (this *RestCtrl) RankHandler(w http.ResponseWriter, r *http.Request) {
 	limit, err := strconv.Atoi(r.URL.Query().Get("limit"))
 	if err != nil {
-		limit = -1 // get all matches
+		limit = -1 // get all rank
 	}
 	res, err := this.Store.GetRanking(limit)
 	if err != nil {

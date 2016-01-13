@@ -69,6 +69,9 @@ func (this *Instance) Run(term r.Term, limit ...int) (*r.Cursor, error) {
 	if len(limit) == 0 {
 		return term.Run(this.session)
 	} else {
+		if limit[0] == -1 {
+			return term.Run(this.session)
+		}
 		return term.Limit(limit[0]).Run(this.session)
 	}
 
