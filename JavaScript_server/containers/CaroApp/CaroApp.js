@@ -56,7 +56,7 @@ export default class CaroApp extends Component {
   		{user &&
         <div className="col-lg-4 col-md-4 col-sm-4 col-xs-12">
           <ProfileBox user={user} logout={this.handleLogout} />
-          <Paper zDepth={3}>
+          <Paper zDepth={3} style={{ marginBottom: 25 }}>
             <Link to="/"><MenuItem style={center} primaryText="Home" /></Link>
             <Divider />
             <Link to="/ranking"><MenuItem style={center} primaryText="Rank" /></Link>

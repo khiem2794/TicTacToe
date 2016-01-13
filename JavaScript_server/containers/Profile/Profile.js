@@ -19,7 +19,7 @@ function fetchData(getState, dispatch) {
 export default class Profile extends Component {
   static propTypes = {
   	user: PropTypes.object.isRequired,
-  	profile: PropTypes.object.isRequired
+  	profile: PropTypes.object
   };
   render() {
     return (

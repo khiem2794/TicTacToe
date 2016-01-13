@@ -91,7 +91,9 @@ func (this *setupStruct) setupRoutes() {
 	restCtrl := handlers.NewRestCtrl(store)
 	{
 		router.Handle("/api/rank", normal(restCtrl.RankHandler)).Methods("GET")
-		router.Handle("/api/{fbid}", normal(restCtrl.ProfileHandler)).Methods("GET")
+		router.Handle("/api/rank/user/{fbid}", normal(restCtrl.UserRankHandler)).Methods("GET")
+		router.Handle("/api/user/{fbid}", normal(restCtrl.ProfileHandler)).Methods("GET")
+		router.Handle("/api/match/{id}", normal(restCtrl.MatchHandler)).Methods("GET")
 	}
 
 	this.Handler = context.ClearHandler(router)

@@ -39,7 +39,7 @@ func (this *Store) StartMatch(players [2]string, matchid string) error {
 		if err != nil {
 			return err
 		}
-		user.Match = append(user.Match, matchid)
+		user.Match = append([]string{matchid}, user.Match...)
 		_, err = this.re.RunWrite(this.re.Table(domain.USER_TABLE).Get(userid).Update(user))
 		if err != nil {
 			return err
@@ -99,7 +99,7 @@ func (this *Store) GetAverageTurn(userId string, matches []string) (averageTurn 
 	return
 }
 
-func (this *Store) GetProfile(userId string) ([]byte, error) {
+func (this *Store) GetProfile(userId string, matchLimit int) ([]byte, error) {
 	user, err := this.GetUser(userId)
 	if err != nil {
 		return nil, err
@@ -135,6 +135,9 @@ func (this *Store) GetProfile(userId string) ([]byte, error) {
 	}
 	matchResponse := []*MatchResponse{}
 	for _, match := range matches {
+		if len(matchResponse) == matchLimit {
+			break
+		}
 		var opponent string
 		if userId == match.Player[0] {
 			opponent = match.Player[1]
@@ -198,5 +201,47 @@ func (this *Store) GetRanking(limit int) ([]byte, error) {
 		response = append(response, p)
 	}
 	res, err := json.Marshal(response)
+	return res, err
+}
+
+func (this *Store) GetMatchInfo(matchId string) ([]byte, error) {
+	type PlayerResponse struct {
+		Id   string `json:"id"`
+		Name string `json:"name"`
+	}
+	type MatchResponse struct {
+		Id     string             `json:"id"`
+		Player [2]*PlayerResponse `json:"player"`
+		Winner *PlayerResponse    `json:"winner"`
+		Turn   int                `json:"turn"`
+		Time   time.Time          `json:"time"`
+	}
+	match, err := this.GetMatch(matchId)
+	if err != nil {
+		return nil, err
+	}
+	var player [2]*PlayerResponse
+	var winner *PlayerResponse
+	for i, id := range match.Player {
+		p, err := this.GetUser(id)
+		if err != nil {
+			return nil, err
+		}
+		player[i] = &PlayerResponse{
+			Id:   p.Id,
+			Name: p.Name,
+		}
+		if match.Winner == id {
+			winner = player[i]
+		}
+	}
+	matchResponse := &MatchResponse{
+		Id:     match.Id,
+		Player: player,
+		Winner: winner,
+		Turn:   match.Turn,
+		Time:   match.CreatedTime,
+	}
+	res, err := json.Marshal(matchResponse)
 	return res, err
 }

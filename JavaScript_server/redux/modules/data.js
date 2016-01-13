@@ -18,7 +18,7 @@ export default function reducer(state = initialState, action = {}) {
   	case LOAD_PROFILE_SUCCESS:
   	  return {
   	  	...state,
-  	  	profile: action.data
+  	  	profile: action.result
   	  };
   	case LOAD_PROFILE_FAIL:
   	  return {
@@ -28,11 +28,13 @@ export default function reducer(state = initialState, action = {}) {
   	  return {
   	  	...state
   	  };
-  	case LOAD_RANK_FAIL:
-  	  return {
-  	  	...state
-  	  };
   	case LOAD_RANK_SUCCESS:
+  	  console.log(action.result);
+  	  return {
+  	  	...state,
+  	  	rank: action.result
+  	  };
+  	case LOAD_RANK_FAIL:
   	  return {
   	  	...state
   	  };
@@ -42,16 +44,15 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 export function loadProfile(fbid) {
-  console.log(`get profile ${fbid}`);
   return {
   	types: [LOAD_PROFILE, LOAD_PROFILE_SUCCESS, LOAD_PROFILE_FAIL],
-  	promise: (client) => client.get(`/api/${fbid}`)
+  	promise: (client) => client.get(`/api/user/${fbid}`)
   }
 }
 
-export function loadRank() {
+export function loadRank(limit) {
   return {
-  	types: [LOAD_RANK, LOAD_RANK_SUCCESS, LOAD_RANK_FAIL],
-  	promise: (client) => client.get('/rank')
-  }
+    types: [LOAD_RANK, LOAD_RANK_SUCCESS, LOAD_RANK_FAIL],
+    promise: (client) => client.get(`/api/rank?limit=${limit}`)
+  };
 }
