@@ -86,6 +86,8 @@ func (this *setupStruct) setupRoutes() {
 	gameCtrl := handlers.NewGameCtrl(store)
 	{
 		router.Handle("/ws/caro", normal(gameCtrl.CaroHandler))
+		router.Handle("/matches", normal(gameCtrl.GetMatchesHandler)).Methods("GET")
+		router.Handle("/ws/spectate", normal(gameCtrl.SpectateHandler))
 	}
 
 	restCtrl := handlers.NewRestCtrl(store)
