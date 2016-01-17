@@ -5,7 +5,6 @@ export default class CaroHomepage extends Component {
   render() {
     return (
   	<div>
-  		LOGIN PAGE
       <div>
         <FacebookLogin />
       </div>

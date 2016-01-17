@@ -4,6 +4,7 @@ const GET_MATCH_FAIL = 'spectate/GET_MATCH_FAIL';
 const INIT_SOCKET = 'spectate/INIT_SOCKET';
 const START_SPECTATE = 'spectate/START';
 const RESPONSE_RECEIVE = 'spectate/RESPONSE_RECEIVE';
+const CLOSE_SPECTATE = 'spectate/CLOSE_SPECTATE';
 
 const initialState = {
   spectating: false,
@@ -37,8 +38,18 @@ export default function reducer(state = initialState, action = {}) {
       };
     case RESPONSE_RECEIVE:
       return {
-        ...state
+        ...state,
+        board: action.data.board,
+        finish: action.data.finish,
+        player: action.data.player,
+        roomid: action.data.roomid
       };
+    case CLOSE_SPECTATE: {
+      return {
+        socket: state.socket,
+        spectating: false
+      };
+    }
     default:
       return state;
   }
@@ -52,7 +63,6 @@ export function getMatch() {
 }
 
 export function initSocket(ws) {
-  console.log('init socket spectate');
   return {
     type: INIT_SOCKET,
     ws
@@ -60,16 +70,20 @@ export function initSocket(ws) {
 }
 
 export function startSpectate() {
-  console.log('begin spectate');
   return {
     type: START_SPECTATE
   };
 }
 
 export function responseHandle(data) {
-  console.log('handle', data);
   return {
     type: RESPONSE_RECEIVE,
     data
   }
+}
+
+export function closeSpectate() {
+  return {
+    type: CLOSE_SPECTATE
+  };
 }

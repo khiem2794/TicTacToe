@@ -45,10 +45,10 @@ export default class Profile extends Component {
   	}
     return (
   		<div>
-  			<Paper zDepth={3} style={{ textAlign: 'center' }}>
+  			<Paper className="row" zDepth={3} style={{ textAlign: 'center' }}>
 	  			<Card>
 				    <CardMedia>
-				        <img style={style.cover} src={`http://demo.geekslabs.com/materialize/v2.1/layout02/images/user-profile-bg.jpg`}/>
+				        <img style={style.cover} src={`/user-profile-bg.jpg`}/>
 				    </CardMedia>
 				    <CardTitle style={style.title}>
 				    	<div className="col-md-5 col-sm-5 col-xs-5" style={{ textAlign: 'left'}}>
@@ -72,7 +72,7 @@ export default class Profile extends Component {
 			    	</CardTitle>
 				</Card>
 			</Paper>
-			<Paper zDepth={3} style={{ textAlign: 'center', marginTop: 25 }}>
+			<Paper zDepth={3} className="row" style={{ textAlign: 'center', marginTop: 25, marginBottom: 50, paddingBottom: 50 }}>
 	  			<AppBar
 				  title="Matches"
 				  titleStyle={{ textAlign: 'left'}}
@@ -103,4 +103,3 @@ export default class Profile extends Component {
   	);
   }
 }
- 

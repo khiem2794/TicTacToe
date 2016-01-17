@@ -36,7 +36,7 @@ export default class Ranking extends Component {
     const {rank} = this.props;
     return (
   		<div>
-  			<Paper zDepth={3} style={{ textAlign: 'center' }}>
+  			<Paper className="row" zDepth={3} style={{ textAlign: 'center', marginBottom: 50, paddingBottom: 50 }}>
 	  			<AppBar
 				  title="Caro Official Ranking"
 				  titleStyle={{ textAlign: 'left'}}
@@ -66,4 +66,3 @@ export default class Ranking extends Component {
   	);
   }
 }
-

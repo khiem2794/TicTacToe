@@ -115,7 +115,6 @@ func (this *GameCtrl) SpectateHandler(w http.ResponseWriter, r *http.Request) {
 	defer conn.Close()
 	for {
 		_, message, err := conn.ReadMessage()
-		log.Println(string(message))
 		if err != nil {
 			gameLogger.Println(err)
 			w.WriteHeader(404)
@@ -129,6 +128,7 @@ func (this *GameCtrl) SpectateHandler(w http.ResponseWriter, r *http.Request) {
 		if err == nil {
 			for r, _ := range this.Pool.Rooms {
 				if r.Id == s.RoomId {
+					log.Println(string(message))
 					Caro.Subcribe(r, conn)
 					defer Caro.UnSubcribe(r, conn)
 				}

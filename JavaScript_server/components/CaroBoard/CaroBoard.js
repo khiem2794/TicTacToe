@@ -1,23 +1,28 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import range from 'helpers/range';
-const style = `
-table {
-  border-collapse: collapse;
-}
+import Paper from 'material-ui/lib/paper';
 
-td {
-  border: solid 1px;
-  width: 30px;
-  padding: 5px;
-  text-align: center;
-  cursor: pointer;
-}
-
-td.lastmove {
-  color: #a00;
-}
-`;
+const style = {
+  cell: {
+    height: 40,
+    width: 40,
+    backgroundColor: 'black',
+    margin: 1,
+    rounded: false,
+    display: 'table',
+    textAlign: 'center'
+  },
+  symbol: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 'x-large',
+    display: 'table-cell',
+    verticalAlign: 'middle'
+  },
+  board: {
+  }
+};
 @connect(
   state => ({
     socket: state.caro.socket
@@ -33,11 +38,11 @@ export default class CaroBoard extends Component {
     super(props);
     this.state = {
       numbers: range(0, this.props.board.size - 1),
-      cells: this.getInitBoard(),
+      cells: this.initBoard(),
       lastMove: {x: null, y: null}
     };
   }
-  getInitBoard = () => {
+  initBoard = () => {
     const numbers = range(0, this.props.board.size - 1);
     return numbers.map(() =>
       numbers.map(() => ({ char: '' })));
@@ -69,8 +74,7 @@ export default class CaroBoard extends Component {
       }
     }
     return (
-      <div>
-        <style dangerouslySetInnerHTML={{__html: style}}/>
+      <div style={style.board} className="col-md-offset-0 col-lg-offset-1" >
         <table>
           <tbody>
             {
@@ -81,7 +85,7 @@ export default class CaroBoard extends Component {
                     <td
                       className={lX === px && lY === py ? 'lastmove' : ''}
                       onClick={() => this.playAtCell(px, py)}>
-                        {cells[px][py].char || '.'}
+                        <Paper style={{...style.cell, cursor: 'pointer'}} zDepth={1}><span style={style.symbol}>{cells[px][py].char}</span></Paper>
                     </td>
                   ))
                 }
@@ -94,4 +98,3 @@ export default class CaroBoard extends Component {
     );
   }
 }
-

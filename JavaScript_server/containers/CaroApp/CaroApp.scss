@@ -1,0 +1,55 @@
+.home {
+  background-color: red !important;
+  text-align: center;
+  width: 50%;
+  display: inline-block;
+  text-decoration: none;
+  &:hover {
+    font-weight: bolder;
+    text-decoration: none;
+    transition: all .2s ease-in-out;
+    transform: scale(1.1);
+  }
+}
+
+.rank {
+  background-color: green !important;
+  text-align: center;
+  width: 50%;
+  display: inline-block;
+  text-decoration: none;
+  &:hover {
+    font-weight: bolder;
+    text-decoration: none;
+    transition: all .2s ease-in-out;
+    transform: scale(1.1);
+  }
+}
+
+.spectate {
+  background-color: blue !important;
+  text-align: center;
+  width: 50%;
+  display: inline-block;
+  text-decoration: none;
+  &:hover {
+    font-weight: bolder;
+    text-decoration: none;
+    transition: all .2s ease-in-out;
+    transform: scale(1.1);
+  }
+}
+
+.play {
+  background-color: purple !important;
+  text-align: center;
+  width: 50%;
+  display: inline-block;
+  text-decoration: none;
+  &:hover {
+    font-weight: bolder;
+    text-decoration: none;
+    transition: all .2s ease-in-out;
+    transform: scale(1.1);
+  }
+}

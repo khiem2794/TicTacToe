@@ -6,12 +6,13 @@ import { pushState } from 'redux-router';
 import { Link } from 'react-router';
 import DocumentMeta from 'react-document-meta';
 import config from '../../config';
+
 import Divider from 'material-ui/lib/divider';
 import Paper from 'material-ui/lib/paper';
+import Menu from 'material-ui/lib/menus/menu';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import { ProfileBox } from 'components';
 import {logout} from 'redux/modules/facebookauth';
-
 import Theme from 'material-ui/lib/styles/raw-themes/dark-raw-theme';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
@@ -52,6 +53,7 @@ export default class CaroApp extends Component {
   };
   render() {
     const {user} = this.props;
+    const caroAppStyle = require('./CaroApp.scss');
     const center = {
       textAlign: 'center',
     };
@@ -63,13 +65,10 @@ export default class CaroApp extends Component {
         <div className="col-lg-4 col-md-4 col-sm-4 col-xs-12">
           <ProfileBox user={user} logout={this.handleLogout} />
           <Paper zDepth={3} style={{ marginBottom: 25 }}>
-            <Link to="/"><MenuItem style={center} primaryText="Home" /></Link>
-            <Divider />
-            <Link to="/ranking"><MenuItem style={center} primaryText="Rank" /></Link>
-            <Divider />
-            <Link to="/spectate"><MenuItem style={center} primaryText="Spectate" /></Link>
-            <Divider />
-            <Link to="/caro"><MenuItem style={center} primaryText="Play" /></Link>
+              <Link className={caroAppStyle.home} to="/"><MenuItem style={{ height: 100, paddingTop: 25 }} primaryText="HOME"></MenuItem></Link>
+              <Link className={caroAppStyle.rank} to="/ranking"><MenuItem style={{ height: 100, paddingTop: 25 }} primaryText="RANK"></MenuItem></Link>
+              <Link className={caroAppStyle.spectate} to="/spectate"><MenuItem style={{ height: 100, paddingTop: 25 }} primaryText="SPECTATE"></MenuItem></Link>
+              <Link className={caroAppStyle.play} to="/caro"><MenuItem style={{ height: 100, paddingTop: 25 }} primaryText="PLAY"></MenuItem></Link>
           </Paper>
         </div>}
 

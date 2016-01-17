@@ -124,7 +124,8 @@ export function restart() {
   };
 }
 
-export function reset() {
+export function reset(ws) {
+  
   return {
     type: ACTION_RESET
   };
