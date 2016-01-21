@@ -18,7 +18,7 @@ if (__DEVELOPMENT__) {
     return;
   }
 }
-
+console.log("ENV ", process.env.HOST, process.env.PORT, process.env.APIHOST, process.env.APIPORT);
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools
 var WebpackIsomorphicTools = require('webpack-isomorphic-tools');
 global.webpackIsomorphicTools = new WebpackIsomorphicTools(require('../webpack/webpack-isomorphic-tools'))

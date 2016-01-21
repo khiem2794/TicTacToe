@@ -19,8 +19,8 @@ export default class CaroHomepage extends Component {
           <Paper className="row" zDepth={3} style={{ textAlign: 'center', marginBottom: 50 }}>
 
             <div className="grid">
-              <figure className="effect-winston">
-                <img src="img/30.jpg" alt="img30"/>
+              <figure className="effect-winston col-md-6 col-sm-6">
+                <img src="img/23.jpg" alt="img30"/>
                 <figcaption>
                   <h2>Jolly <span>Winston</span></h2>
                   <p>
@@ -30,7 +30,7 @@ export default class CaroHomepage extends Component {
                   </p>
                 </figcaption>
               </figure>
-              <figure className="effect-winston">
+              <figure className="effect-winston col-md-6 col-sm-6">
                 <img src="img/1.jpg" alt="img01"/>
                 <figcaption>
                   <h2>Jolly <span>Winston</span></h2>
@@ -46,8 +46,8 @@ export default class CaroHomepage extends Component {
               <span>K</span><span>H</span><span>I</span><span>Ê</span><span>M</span>
             </a>
             <div className="grid">
-              <figure className="effect-hera">
-                <img src="img/17.jpg" alt="img17"/>
+              <figure className="effect-hera col-md-6 col-sm-6">
+                <img src="img/3.jpg" alt="img17"/>
                 <figcaption>
                   <h2><span>Hera</span></h2>
                   <p>
@@ -58,8 +58,8 @@ export default class CaroHomepage extends Component {
                   </p>
                 </figcaption>
               </figure>
-              <figure className="effect-hera">
-                <img src="img/25.jpg" alt="img25"/>
+              <figure className="effect-hera col-md-6 col-sm-6">
+                <img src="img/4.jpg" alt="img25"/>
                 <figcaption>
                   <h2><span>Hera</span></h2>
                   <p>

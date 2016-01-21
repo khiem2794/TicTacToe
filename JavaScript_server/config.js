@@ -9,11 +9,16 @@ const environment = {
   }
 }[process.env.NODE_ENV || 'development'];
 
+const host = '127.0.0.1';
+const port = 3000;
+const apiHost = '127.0.0.1';
+const apiPort = 3030;
+
 module.exports = Object.assign({
-  host: process.env.HOST || 'localhost',
-  port: process.env.PORT,
-  apiHost: process.env.APIHOST || 'localhost',
-  apiPort: process.env.APIPORT || 3030,
+  host: process.env.HOST || host,
+  port: process.env.PORT || port,
+  apiHost: process.env.APIHOST || apiHost,
+  apiPort: process.env.APIPORT || apiPort,
   app: {
     title: 'Online Caro game',
     description: 'Online Caro game',
@@ -21,7 +26,6 @@ module.exports = Object.assign({
       charSet: 'utf-8',
       property: {
         'og:site_name': 'Caro-HKN',
-        'og:image': 'https://react-redux.herokuapp.com/logo.jpg',
         'og:locale': 'en_US',
         'og:title': 'Online Caro game',
         'og:description': 'Playing Caro game Online'

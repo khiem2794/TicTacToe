@@ -2,6 +2,7 @@ package middlewares
 
 import (
 	"API_server/utils/cookie"
+	"log"
 	"net/http"
 
 	"github.com/gorilla/context"
@@ -21,6 +22,7 @@ func (a Ctx) factory(next http.Handler) http.Handler {
 		func(w http.ResponseWriter, r *http.Request) {
 			profile, err := cookie.GetProfile(r)
 			if err != nil {
+				log.Println("Context err", err)
 				next.ServeHTTP(w, r)
 			} else {
 				context.Set(r, "PROFILE", profile)

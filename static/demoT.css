@@ -62,7 +62,7 @@ a:hover {
 	align-items: center;
 	-webkit-justify-content: center;
 	justify-content: center;
-	background: url(../img/mouse.svg) no-repeat left 50% bottom 40px;
+	background: url(static/img/mouse.svg) no-repeat left 50% bottom 40px;
 }
 
 .codrops-header::before,

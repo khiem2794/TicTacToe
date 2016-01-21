@@ -48,7 +48,7 @@ export default class Profile extends Component {
   			<Paper className="row" zDepth={3} style={{ textAlign: 'center' }}>
 	  			<Card>
 				    <CardMedia>
-				        <img style={style.cover} src={`/user-profile-bg.jpg`}/>
+				        <img style={style.cover} src={`user-profile-bg.jpg`}/>
 				    </CardMedia>
 				    <CardTitle style={style.title}>
 				    	<div className="col-md-5 col-sm-5 col-xs-5" style={{ textAlign: 'left'}}>

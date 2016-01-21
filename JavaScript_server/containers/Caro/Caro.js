@@ -58,7 +58,6 @@ export default class Caro extends Component {
     if (!this.props.socket) {
       const ws = new window.WebSocket('ws://' + config.apiHost + ':' + config.apiPort + '/ws/caro');
       ws.onmessage = (res) => {
-  	  	// console.log(JSON.parse(res.data));
         responseClient(JSON.parse(res.data), this.props);
       };
       this.props.initSocket(ws);

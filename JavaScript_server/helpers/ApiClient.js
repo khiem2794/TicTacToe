@@ -24,7 +24,6 @@ class _ApiClient {
     methods.forEach((method) =>
       this[method] = (path, { params, data } = {}) => new Promise((resolve, reject) => {
         const request = superagent[method](formatUrl(path));
-
         if (params) {
           request.query(params);
         }
@@ -40,7 +39,7 @@ class _ApiClient {
         // request.end((err, {body} = {} ) => err ? reject(body || err) : resolve(body));
         request.end((err, res = {} ) => {
           const {body} = res;
-          if (err || Object.keys(body).length === 0) {
+          if (err || !body || Object.keys(body).length === 0) {
             reject(body || err);
           } else {
             resolve(body);

@@ -38,6 +38,14 @@ func NewGameCtrl(store *store.Store) *GameCtrl {
 }
 
 func (this *GameCtrl) CaroHandler(w http.ResponseWriter, r *http.Request) {
+	profile, _ := context.Get(r, "PROFILE").(*OAuth.ProfileFB)
+	log.Println("profile", profile)
+	log.Println("req", r)
+	if profile == nil {
+		log.Println("req", r)
+		gameLogger.Println("Cant get Profile")
+		return
+	}
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		gameLogger.Println(err)
@@ -45,7 +53,7 @@ func (this *GameCtrl) CaroHandler(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Cant established  connection"))
 		return
 	}
-	profile, _ := context.Get(r, "PROFILE").(*OAuth.ProfileFB)
+
 	player := &Caro.Player{
 		Conn:     conn,
 		Name:     profile.Name,
@@ -61,6 +69,7 @@ func (this *GameCtrl) CaroHandler(w http.ResponseWriter, r *http.Request) {
 	go player.HandleResponse()
 	for {
 		_, message, err := conn.ReadMessage()
+		log.Println(string(message))
 		if err != nil {
 			gameLogger.Println(err)
 			return

@@ -19,6 +19,7 @@ export default class FacebookAuth extends Component {
     pushState: PropTypes.func.isRequired,
   }
   componentDidMount() {
+    console.log(this.props.location.query.code);
     if (this.props.loggingIn === true && !this.props.user) {
       this.props.login(this.props.location.query.code);
     } else if (this.props.user) {

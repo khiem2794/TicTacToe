@@ -7,6 +7,7 @@ import (
 	"API_server/utils/cookie"
 	"API_server/utils/logs"
 	"encoding/json"
+	"log"
 	"net/http"
 	"time"
 )
@@ -96,6 +97,7 @@ func (this *AuthCtrl) FacebookLogin(w http.ResponseWriter, r *http.Request) {
 func (this *AuthCtrl) LoadAuth(w http.ResponseWriter, r *http.Request) {
 	profileFB, err := cookie.GetProfile(r)
 	if err != nil {
+		log.Println("LoadAuth err", err)
 		return
 	}
 

@@ -27,7 +27,9 @@
         "NODE_PATH": "./JavaScript_server",
         "NODE_ENV": "production",
         "PORT": 3000,
-        "APIPORT": 3030
+        "APIPORT": 3030,
+        "HOST": "127.0.0.1",
+        "APIHOST": "127.0.0.1"
       }
     },
     "start-dev": {
@@ -36,7 +38,9 @@
         "NODE_PATH": "./JavaScript_server",
         "NODE_ENV": "development",
         "PORT": 3000,
-        "APIPORT": 3030
+        "APIPORT": 3030,
+        "HOST": "127.0.0.1",
+        "APIHOST": "127.0.0.1"
       }
     },
     "watch-client": {

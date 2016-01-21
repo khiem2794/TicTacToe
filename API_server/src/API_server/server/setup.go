@@ -38,6 +38,9 @@ func commonMiddlewares() func(http.Handler) http.Handler {
 	recovery := middlewares.NewRecovery()
 	ctx := middlewares.NewCtx()
 	return func(h http.Handler) http.Handler {
+		return ctx(logger(h))
+	}
+	return func(h http.Handler) http.Handler {
 		return recovery(ctx(logger(h)))
 	}
 }

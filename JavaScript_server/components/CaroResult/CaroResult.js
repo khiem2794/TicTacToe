@@ -11,10 +11,8 @@ export default class CaroResult extends Component {
     return (
   		<div>
         <h3>
-          <p>
-        		{win && <div>You win</div>}
-        		{!win && <div>You lose</div>}
-          </p>
+      		{win && <p>You win</p>}
+      		{!win && <p>You lose</p>}
       		<RaisedButton onClick={restart} primary={true} label="END GAME"></RaisedButton>
         </h3>
   		</div>

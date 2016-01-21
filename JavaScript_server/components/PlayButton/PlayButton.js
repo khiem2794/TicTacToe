@@ -18,7 +18,7 @@ export default class PlayButton extends Component {
           {this.props.waiting && <RaisedButton primary={true} label="Waiting..." onClick={this.props.reset} backgroundColor='orange' fullWidth={true}></RaisedButton> }
     		</div>
         <div style={{ paddingTop: 25 }} className="col-lg-3 col-lg-offset-2 col-md-3 col-md-offset-2">
-    			{!this.props.waiting && <RaisedButton primary={true} label="Play vs BOT" onClick={console.log('BOT GAME')} backgroundColor='green' fullWidth={true}></RaisedButton> }
+    			{!this.props.waiting && <RaisedButton primary={true} label="Play vs BOT" backgroundColor='green' fullWidth={true}></RaisedButton> }
     		</div>
       </div>
   	);
