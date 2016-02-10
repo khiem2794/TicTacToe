@@ -13,6 +13,12 @@ import (
 
 const (
 	pkgName = "utils/load-config"
+
+	RETHINKDB_ADDR_ENV        = "RETHINKDB_ADDR"
+	RETHINKDB_PORT_ENV        = "RETHINKDB_PORT"
+	FACEBOOK_APP_ID_ENV       = "FACEBOOK_APP_ID"
+	FACEBOOK_APP_SECRET_ENV   = "FACEBOOK_APP_SECRET"
+	FACEBOOK_CALLBACK_URL_ENV = "FACEBOOK_CALLBACK_URL"
 )
 
 var (
@@ -66,6 +72,7 @@ func FromEnv(v interface{}, tag string) {
 		tField := tConfig.Field(i)
 
 		tag := tField.Tag.Get("json")
+
 		if tag == "" || strings.HasPrefix(tag, "-") {
 			continue
 		}
@@ -74,7 +81,6 @@ func FromEnv(v interface{}, tag string) {
 			FromEnv(vField.Addr().Interface(), tag)
 			continue
 		}
-
 		if vField.Kind() != reflect.String {
 			l.Panicf("%v: field %v must be a string", pkgName, tField.Name)
 		}

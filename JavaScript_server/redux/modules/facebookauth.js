@@ -92,6 +92,7 @@ export function load() {
 }
 
 export function login(code) {
+  console.log("start loggingin");
   return {
     types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
     promise: (client) => client.post('/login/facebook', {

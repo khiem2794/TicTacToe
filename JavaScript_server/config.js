@@ -11,7 +11,7 @@ const environment = {
 
 const host = '127.0.0.1';
 const port = 3000;
-const apiHost = '127.0.0.1';
+const apiHost = '188.166.208.62';
 const apiPort = 3030;
 
 module.exports = Object.assign({

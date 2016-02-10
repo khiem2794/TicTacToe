@@ -2,8 +2,9 @@ FROM golang:1.5.3
 
 MAINTAINER khiem
 
-ADD . /usr/caro/
-ENTRYPOINT /usr/caro
+ADD ./Makefile /usr/caro/Makefile
+ADD ./API_server/src/API_server /usr/caro/API_server/src/API_server
+WORKDIR /usr/caro
 RUN go get github.com/tools/godep
 RUN make install
 RUN make build

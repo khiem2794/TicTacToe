@@ -8,6 +8,8 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
+
+	"API_server/utils/loadConfig"
 )
 
 var (
@@ -44,6 +46,8 @@ func SetupOAuth(flConfigFile string) (*Config, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	loadConfig.FromFileAndEnv(&cfg, flConfigFile)
 	return &cfg, nil
 }
 

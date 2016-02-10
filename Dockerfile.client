@@ -1,0 +1,10 @@
+FROM node:4.2.6
+
+MAINTAINER khiem
+
+COPY ./package.json /usr/caro/
+WORKDIR /usr/caro
+RUN npm install
+COPY . /usr/caro
+CMD make run-client-dev
+EXPOSE 3000

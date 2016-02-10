@@ -39,8 +39,6 @@ func NewGameCtrl(store *store.Store) *GameCtrl {
 
 func (this *GameCtrl) CaroHandler(w http.ResponseWriter, r *http.Request) {
 	profile, _ := context.Get(r, "PROFILE").(*OAuth.ProfileFB)
-	log.Println("profile", profile)
-	log.Println("req", r)
 	if profile == nil {
 		log.Println("req", r)
 		gameLogger.Println("Cant get Profile")

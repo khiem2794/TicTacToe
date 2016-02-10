@@ -12,17 +12,16 @@ type Config struct {
 	} `json:"server"`
 
 	Rethink struct {
-		Port   string `json:"RETHINKDB_PORT"`
-		Addr   string `json:"RETHINKDB_ADDR"`
-		DBName string `json:"RETHINKDB_DBNAME"`
+		Port    string `json:"RETHINKDB_PORT"`
+		Addr    string `json:"RETHINKDB_ADDR"`
+		DBName  string `json:"RETHINKDB_DBNAME"`
+		Authkey string `json:"RETHINKDB_AUTH_KEY"`
 	} `json:"rethinkdb"`
 }
 
 func Start(cfg Config, authCfg *OAuth.Config) {
 	s := setup(cfg, authCfg)
-
 	listenAddr := cfg.Server.Addr + ":" + cfg.Server.Port
-
 	l.Println("API_server is listening on", listenAddr)
 	http.ListenAndServe(listenAddr, s.Handler)
 }

@@ -58,6 +58,7 @@ func (s *setupStruct) setupRethink() {
 	re, err := r.NewInstance(gorethink.ConnectOpts{
 		Address:  cfg.Rethink.Addr + ":" + cfg.Rethink.Port,
 		Database: cfg.Rethink.DBName,
+		AuthKey:  cfg.Rethink.Authkey,
 	})
 	if err != nil {
 		l.Fatalln("Couldn't connect to Rethink server")
