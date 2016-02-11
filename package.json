@@ -40,7 +40,7 @@
         "PORT": 3000,
         "APIPORT": 3030,
         "HOST": "127.0.0.1",
-        "APIHOST": "188.166.208.62"
+        "APIHOST": "127.0.0.1"
       }
     },
     "watch-client": {

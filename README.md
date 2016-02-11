@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/ngockhiem27/caro-nhk.svg?branch=master)](https://travis-ci.org/ngockhiem27/caro-nhk)
+[![Build Status](https://travis-ci.org/ngockhiem27/CaroGame.svg?branch=master)](https://travis-ci.org/ngockhiem27/caro-nhk)
 
 
 # **Set up**
@@ -31,4 +31,3 @@ make run-client-dev
 ```bash
 make run-client-prod
 ```
-
