@@ -1,0 +1,28 @@
+db:
+  image: rethinkdb:latest
+  expose:
+    - 28015
+server:
+  image: khiem/caro-server
+  environment:
+    API_PORT: 3030
+    API_ADDR: 0.0.0.0
+    RETHINKDB_PORT: 28015
+    RETHINKDB_ADDR: db
+    RETHINKDB_DBNAME: caro_hkn
+    RETHINKDB_AUTH_KEY: ""
+  expose:
+    - 3030
+  links:
+    - db
+client:
+  image: khiem/caro-client
+  environment:
+    HOST: 0.0.0.0
+    PORT: 3000
+    APIHOST: server
+    APIPORT: 3030
+  ports:
+    - "3000:3000"
+  links:
+    - server

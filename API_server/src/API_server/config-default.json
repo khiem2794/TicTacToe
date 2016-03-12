@@ -6,9 +6,9 @@
 
 	"rethinkdb": {
 		"RETHINKDB_PORT": "28015",
-		"RETHINKDB_ADDR": "188.166.208.62",
+		"RETHINKDB_ADDR": "127.0.0.1",
 		"RETHINKDB_DBNAME": "caro_hkn",
-		"RETHINKDB_AUTH_KEY": "cherry"
+		"RETHINKDB_AUTH_KEY": ""
 	},
 
 	"facebook": {
