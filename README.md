@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/ngockhiem27/CaroGame.svg?branch=master)](https://travis-ci.org/ngockhiem27/caro-nhk)
 
+Online caro game server(go&rethink) and client(node+reactjs)
 
 # **Set up**
 ##### Install node packages
